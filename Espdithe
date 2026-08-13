@@ -2089,15 +2089,330 @@ Window:EditOpenButton({
     Draggable = true,
 })
 
-local Blue = Color3.fromHex("#257AF7")
+local Black = Color3.fromHex("#121212")
 
 local Tab = Window:Tab({
-    Title = "Tab Title",
+    Title = "Main",
     Icon = "bird", -- optional
-    IconColor = Blue,
+    IconColor = Black,
 	IconShape = "Square",
 	Border = true,
     Locked = false,
+})
+
+Tab:Section({
+    Title = "abnormality",
+    TextXAlignment = "Left",
+    TextSize = 17,
+})
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local LocalPlayer = Players.LocalPlayer
+
+local Event = ReplicatedStorage
+    :WaitForChild("Assets")
+    :WaitForChild("RemoteEvents")
+    :WaitForChild("WorkEvent")
+
+local SelectedWork = nil
+local SelectedAbnormalities = {}
+local SelectedSpeed = "Bình thường"
+local AutoWorkEnabled = false
+
+local SpeedTimes = {
+    ["Siêu chậm"] = 10,
+    ["Chậm"] = 8,
+    ["Bình thường"] = 5.5,
+    ["Nhanh"] = 3
+}
+
+local AbnormalitiesFolder = workspace:WaitForChild("Abnormalities")
+
+local function GetAbnormalityList()
+    local List = {}
+
+    for _, child in ipairs(AbnormalitiesFolder:GetChildren()) do
+        table.insert(List, child.Name)
+    end
+
+    table.sort(List)
+
+    if #List == 0 then
+        table.insert(List, "Không tìm thấy")
+    end
+
+    return List
+end
+
+local AbnormalityDropdown = Tab:Dropdown({
+    Title = "1. Chọn Abnormality",
+    Desc = "Có thể chọn nhiều Abnormality",
+    Values = GetAbnormalityList(),
+    Multi = true,
+
+    Callback = function(Values)
+        SelectedAbnormalities = {}
+
+        if type(Values) == "table" then
+            for _, Value in ipairs(Values) do
+                if Value ~= "Không tìm thấy" then
+                    table.insert(SelectedAbnormalities, Value)
+                end
+            end
+        elseif Values and Values ~= "Không tìm thấy" then
+            table.insert(SelectedAbnormalities, Values)
+        end
+    end
+})
+
+local WorkTypeDropdown = Tab:Dropdown({
+    Title = "2. Chọn Loại Công Việc",
+    Desc = "Chỉ có thể chọn một loại Work",
+    Values = {
+        "Attachment",
+        "Insight",
+        "Instinct",
+        "Repression"
+    },
+    Multi = false,
+
+    Callback = function(Value)
+        if type(Value) == "table" then
+            SelectedWork = Value[1]
+        else
+            SelectedWork = Value
+        end
+    end
+})
+
+local SpeedDropdown = Tab:Dropdown({
+    Title = "3. Thời Gian Chờ",
+    Desc = "Thời gian chờ trước khi làm Abnormality tiếp theo",
+
+    Values = {
+        "Siêu chậm",
+        "Chậm",
+        "Bình thường",
+        "Nhanh"
+    },
+
+    Multi = false,
+
+    Value = "Bình thường",
+
+    Callback = function(Value)
+        if type(Value) == "table" then
+            SelectedSpeed = Value[1]
+        else
+            SelectedSpeed = Value
+        end
+    end
+})
+
+local ClearAbnormalityButton = Tab:Button({
+    Title = "Clear Abnormality",
+    Desc = "Xóa toàn bộ Abnormality đã chọn",
+
+    Callback = function()
+        SelectedAbnormalities = {}
+
+        pcall(function()
+            AbnormalityDropdown:Clear()
+        end)
+
+        WindUI:Notify({
+            Title = "Abnormality",
+            Content = "Đã xóa toàn bộ Abnormality đã chọn.",
+            Duration = 3
+        })
+    end
+})
+
+local AutoWorkToggle = Tab:Toggle({
+    Title = "Bật/Tắt Auto Work",
+    Desc = "Làm tuần tự từng Abnormality đã chọn",
+    Value = false,
+
+    Callback = function(Value)
+        AutoWorkEnabled = Value
+
+        if not AutoWorkEnabled then
+            WindUI:Notify({
+                Title = "Auto Work",
+                Content = "Đã tắt Auto Work.",
+                Duration = 3
+            })
+            return
+        end
+
+        if #SelectedAbnormalities == 0 then
+            AutoWorkEnabled = false
+
+            WindUI:Notify({
+                Title = "Cảnh Báo!",
+                Content = "Bạn chưa chọn Abnormality!",
+                Duration = 4
+            })
+
+            pcall(function()
+                AutoWorkToggle:Set(false)
+            end)
+
+            return
+        end
+
+        if not SelectedWork then
+            AutoWorkEnabled = false
+
+            WindUI:Notify({
+                Title = "Cảnh Báo!",
+                Content = "Bạn chưa chọn Loại Công Việc!",
+                Duration = 4
+            })
+
+            pcall(function()
+                AutoWorkToggle:Set(false)
+            end)
+
+            return
+        end
+
+        local WaitTime = SpeedTimes[SelectedSpeed] or 5.5
+
+        WindUI:Notify({
+            Title = "Auto Work",
+            Content = "Đã bật | " .. SelectedSpeed .. " | " .. WaitTime .. "s",
+            Duration = 3
+        })
+
+        task.spawn(function()
+            while AutoWorkEnabled do
+
+                for Index, AbnormalityName in ipairs(SelectedAbnormalities) do
+
+                    if not AutoWorkEnabled then
+                        break
+                    end
+
+                    local targetAbnormality =
+                        AbnormalitiesFolder:FindFirstChild(
+                            AbnormalityName
+                        )
+
+                    if targetAbnormality then
+
+                        local tablet =
+                            targetAbnormality:FindFirstChild(
+                                "WorkTablet"
+                            )
+
+                        local workTimeValue =
+                            targetAbnormality:FindFirstChild(
+                                "WorkTime"
+                            )
+
+                        if tablet and workTimeValue then
+
+                            Event:FireServer(
+                                tablet,
+                                SelectedWork
+                            )
+
+                            task.wait(1.5)
+
+                            if not AutoWorkEnabled then
+                                break
+                            end
+
+                            local lastValue =
+                                workTimeValue.Value
+
+                            repeat
+                                task.wait(1)
+
+                                if not AutoWorkEnabled then
+                                    break
+                                end
+
+                                local currentValue =
+                                    workTimeValue.Value
+
+                                if currentValue ~= lastValue then
+                                    lastValue = currentValue
+                                else
+                                    break
+                                end
+
+                            until not AutoWorkEnabled
+                                or workTimeValue.Value <= 0
+                        end
+                    end
+
+                    if not AutoWorkEnabled then
+                        break
+                    end
+
+                    if Index < #SelectedAbnormalities then
+                        task.wait(
+                            SpeedTimes[SelectedSpeed] or 5.5
+                        )
+                    end
+                end
+
+                task.wait(0.5)
+            end
+        end)
+    end
+})
+
+local function RefreshAbnormalityList()
+    local NewList = GetAbnormalityList()
+
+    pcall(function()
+        AbnormalityDropdown:Refresh(NewList)
+    end)
+
+    for i = #SelectedAbnormalities, 1, -1 do
+        if not AbnormalitiesFolder:FindFirstChild(
+            SelectedAbnormalities[i]
+        ) then
+            table.remove(SelectedAbnormalities, i)
+        end
+    end
+end
+
+AbnormalitiesFolder.ChildAdded:Connect(function()
+    task.wait(0.1)
+    RefreshAbnormalityList()
+end)
+
+AbnormalitiesFolder.ChildRemoved:Connect(function()
+    task.wait(0.1)
+    RefreshAbnormalityList()
+end)
+
+task.spawn(function()
+    local LastList = ""
+
+    while task.wait(2) do
+        local CurrentList = GetAbnormalityList()
+        local CurrentString = table.concat(CurrentList, "|")
+
+        if CurrentString ~= LastList then
+            LastList = CurrentString
+            RefreshAbnormalityList()
+        end
+    end
+end)
+
+Tab:Divider()
+
+Tab:Section({
+    Title = "ESP",
+    TextXAlignment = "Left",
+    TextSize = 17,
 })
 
 local ESPEnabled = false
@@ -2187,36 +2502,68 @@ local function createESP(unit, name, isRoot)
     highlight.Name = "BreachESP"
     highlight.Adornee = unit
     highlight.FillColor = isRoot
-        and Color3.fromRGB(255, 50, 50)
-        or Color3.fromRGB(255, 190, 50)
-    highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
-    highlight.FillTransparency = 0.5
-    highlight.OutlineTransparency = 0
+        and Color3.fromRGB(255, 55, 75)
+        or Color3.fromRGB(80, 170, 255)
+    highlight.OutlineColor = isRoot
+        and Color3.fromRGB(255, 150, 160)
+        or Color3.fromRGB(160, 220, 255)
+    highlight.FillTransparency = isRoot and 0.65 or 0.75
+    highlight.OutlineTransparency = 0.05
     highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
     highlight.Parent = unit
 
     local billboard = Instance.new("BillboardGui")
     billboard.Name = "BreachESPText"
     billboard.Adornee = unit
-    billboard.Size = UDim2.fromOffset(220, 45)
-    billboard.StudsOffset = Vector3.new(0, 4, 0)
+    billboard.Size = UDim2.fromOffset(170, 32)
+    billboard.StudsOffset = Vector3.new(0, 3.5, 0)
     billboard.AlwaysOnTop = true
     billboard.MaxDistance = math.huge
+    billboard.LightInfluence = 0
     billboard.Parent = unit
+
+    local background = Instance.new("Frame")
+    background.Name = "Background"
+    background.Size = UDim2.fromScale(1, 1)
+    background.BackgroundColor3 = isRoot
+        and Color3.fromRGB(20, 8, 12)
+        or Color3.fromRGB(7, 14, 24)
+    background.BackgroundTransparency = 0.15
+    background.BorderSizePixel = 0
+    background.Parent = billboard
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 8)
+    corner.Parent = background
+
+    local stroke = Instance.new("UIStroke")
+    stroke.Thickness = 1
+    stroke.Transparency = 0.15
+    stroke.Color = isRoot
+        and Color3.fromRGB(255, 70, 90)
+        or Color3.fromRGB(70, 170, 255)
+    stroke.Parent = background
+
+    local padding = Instance.new("UIPadding")
+    padding.PaddingLeft = UDim.new(0, 7)
+    padding.PaddingRight = UDim.new(0, 7)
+    padding.PaddingTop = UDim.new(0, 3)
+    padding.PaddingBottom = UDim.new(0, 3)
+    padding.Parent = background
 
     local text = Instance.new("TextLabel")
     text.Name = "Text"
     text.BackgroundTransparency = 1
     text.Size = UDim2.fromScale(1, 1)
-    text.Text = isRoot and name .. "\n[BREACHED]" or name
+    text.Text = isRoot and name .. "  •  BREACHED" or name
     text.TextColor3 = isRoot
-        and Color3.fromRGB(255, 70, 70)
-        or Color3.fromRGB(255, 210, 70)
+        and Color3.fromRGB(255, 100, 115)
+        or Color3.fromRGB(105, 195, 255)
     text.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-    text.TextStrokeTransparency = 0
+    text.TextStrokeTransparency = 0.25
     text.TextScaled = true
-    text.Font = Enum.Font.GothamBold
-    text.Parent = billboard
+    text.Font = Enum.Font.GothamSemibold
+    text.Parent = background
 
     ESPData[unit] = {
         Highlight = highlight,
@@ -2247,7 +2594,6 @@ end
 
 local function findMinionUnits(minionName)
     local result = {}
-
     local normalized = normalizeName(minionName)
 
     for _, unit in ipairs(Units:GetChildren()) do
@@ -2380,7 +2726,7 @@ Abnormalities.ChildRemoved:Connect(function(abnormality)
     removeRootESP(abnormality)
 end)
 
-Units.ChildAdded:Connect(function(unit)
+Units.ChildAdded:Connect(function()
     task.delay(0.2, function()
         if ESPEnabled then
             checkAll()
@@ -2416,10 +2762,424 @@ Tab:Toggle({
     end
 })
 
+local OrdealESPEnabled = false
+
+local Units = workspace:WaitForChild("Units")
+
+local OrdealESPData = {}
+local PendingCheck = false
+
+local KnownAbnormalities = {
+    ["Nothing There"] = true,
+    ["Mouting of Smile"] = true,
+    ["The Wee Witch's Friend"] = true,
+    ["King"] = true,
+    ["TR0W3L=US3R;CYBORG"] = true,
+    ["Narrator"] = true,
+    ["Supa Speedster"] = true,
+    ["CENSORED"] = true,
+    ["Uncertified"] = true
+}
+
+local KnownMinions = {
+    ["Pawn"] = true,
+    ["Rook"] = true,
+    ["Knight"] = true,
+    ["Bishop"] = true,
+    ["Queen"] = true,
+    ["R1G"] = true,
+    ["R1G+"] = true,
+    ["M4N4G3R"] = true,
+    ["NarratorMinion"] = true,
+    ["Supaspeedling"] = true,
+    ["CENSORED Minions"] = true,
+    ["Combat Soldier"] = true,
+    ["Combat Dummy"] = true,
+    ["Laetitia"] = true
+}
+
+local function normalizeName(name)
+    name = string.lower(name)
+    name = name:gsub("%s*%b()$", "")
+    name = name:gsub("%s+$", "")
+    return name
+end
+
+local function removeOrdealESP(unit)
+    local data = OrdealESPData[unit]
+
+    if not data then
+        return
+    end
+
+    if data.Highlight then
+        data.Highlight:Destroy()
+    end
+
+    if data.Billboard then
+        data.Billboard:Destroy()
+    end
+
+    OrdealESPData[unit] = nil
+end
+
+local function createOrdealESP(unit)
+    if not OrdealESPEnabled then
+        return
+    end
+
+    if not unit or not unit.Parent then
+        return
+    end
+
+    if OrdealESPData[unit] then
+        return
+    end
+
+    local highlight = Instance.new("Highlight")
+    highlight.Name = "OrdealESP"
+    highlight.Adornee = unit
+    highlight.FillColor = Color3.fromRGB(175, 80, 255)
+    highlight.OutlineColor = Color3.fromRGB(220, 170, 255)
+    highlight.FillTransparency = 0.7
+    highlight.OutlineTransparency = 0.05
+    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    highlight.Parent = unit
+
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "OrdealESPText"
+    billboard.Adornee = unit
+    billboard.Size = UDim2.fromOffset(170, 32)
+    billboard.StudsOffset = Vector3.new(0, 3.5, 0)
+    billboard.AlwaysOnTop = true
+    billboard.MaxDistance = math.huge
+    billboard.LightInfluence = 0
+    billboard.Parent = unit
+
+    local background = Instance.new("Frame")
+    background.Size = UDim2.fromScale(1, 1)
+    background.BackgroundColor3 = Color3.fromRGB(18, 8, 28)
+    background.BackgroundTransparency = 0.15
+    background.BorderSizePixel = 0
+    background.Parent = billboard
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 8)
+    corner.Parent = background
+
+    local stroke = Instance.new("UIStroke")
+    stroke.Thickness = 1
+    stroke.Transparency = 0.1
+    stroke.Color = Color3.fromRGB(190, 100, 255)
+    stroke.Parent = background
+
+    local padding = Instance.new("UIPadding")
+    padding.PaddingLeft = UDim.new(0, 7)
+    padding.PaddingRight = UDim.new(0, 7)
+    padding.Parent = background
+
+    local text = Instance.new("TextLabel")
+    text.BackgroundTransparency = 1
+    text.Size = UDim2.fromScale(1, 1)
+    text.Text = unit.Name
+    text.TextColor3 = Color3.fromRGB(210, 145, 255)
+    text.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    text.TextStrokeTransparency = 0.2
+    text.TextScaled = true
+    text.Font = Enum.Font.GothamSemibold
+    text.Parent = background
+
+    OrdealESPData[unit] = {
+        Highlight = highlight,
+        Billboard = billboard
+    }
+end
+
+local function isKnownUnit(unit)
+    local normalized = normalizeName(unit.Name)
+
+    for name in pairs(KnownAbnormalities) do
+        if normalizeName(name) == normalized then
+            return true
+        end
+    end
+
+    for name in pairs(KnownMinions) do
+        if normalizeName(name) == normalized then
+            return true
+        end
+    end
+
+    return false
+end
+
+local function checkUnit(unit)
+    if not OrdealESPEnabled then
+        return
+    end
+
+    if not unit or not unit.Parent then
+        return
+    end
+
+    if not unit:IsA("Model") and not unit:IsA("BasePart") then
+        return
+    end
+
+    if isKnownUnit(unit) then
+        removeOrdealESP(unit)
+        return
+    end
+
+    createOrdealESP(unit)
+end
+
+local function checkAllUnits()
+    if not OrdealESPEnabled then
+        return
+    end
+
+    if PendingCheck then
+        return
+    end
+
+    PendingCheck = true
+
+    task.delay(0.2, function()
+        PendingCheck = false
+
+        if not OrdealESPEnabled then
+            return
+        end
+
+        for _, unit in ipairs(Units:GetChildren()) do
+            checkUnit(unit)
+        end
+    end)
+end
+
+Units.ChildAdded:Connect(function(unit)
+    task.delay(0.15, function()
+        if OrdealESPEnabled then
+            checkUnit(unit)
+        end
+    end)
+end)
+
+Units.ChildRemoved:Connect(function(unit)
+    removeOrdealESP(unit)
+end)
+
+Tab:Toggle({
+    Title = "Ordeal Event ESP",
+    Desc = "ESP dị thể Ordeal/Event",
+    Value = false,
+
+    Callback = function(value)
+        OrdealESPEnabled = value
+
+        if value then
+            checkAllUnits()
+        else
+            for unit in pairs(OrdealESPData) do
+                removeOrdealESP(unit)
+            end
+        end
+    end
+})
+
+local LightingTab = Window:Tab({
+    Title = "Lighting",
+    Icon = "sun",
+})
+
+local Lighting = game:GetService("Lighting")
+
+local AntiDark = false
+local FullBright = false
+local BrightnessValue = 5
+
+local OriginalLighting = {
+    Brightness = Lighting.Brightness,
+    ClockTime = Lighting.ClockTime,
+    GlobalShadows = Lighting.GlobalShadows,
+    ExposureCompensation = Lighting.ExposureCompensation,
+    Ambient = Lighting.Ambient,
+    OutdoorAmbient = Lighting.OutdoorAmbient,
+    ColorShift_Top = Lighting.ColorShift_Top,
+    ColorShift_Bottom = Lighting.ColorShift_Bottom,
+}
+
+local OriginalEffects = {}
+
+for _, obj in ipairs(Lighting:GetChildren()) do
+    if obj:IsA("Atmosphere")
+    or obj:IsA("BloomEffect")
+    or obj:IsA("ColorCorrectionEffect")
+    or obj:IsA("SunRaysEffect")
+    or obj:IsA("DepthOfFieldEffect") then
+        OriginalEffects[obj] = obj.Enabled
+    end
+end
+
+local function ApplyAntiDark()
+    if not AntiDark then
+        return
+    end
+
+    Lighting.GlobalShadows = false
+    Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+    Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+    Lighting.ColorShift_Top = Color3.fromRGB(255, 255, 255)
+    Lighting.ColorShift_Bottom = Color3.fromRGB(255, 255, 255)
+    Lighting.ExposureCompensation = math.max(
+        Lighting.ExposureCompensation,
+        1
+    )
+
+    for _, obj in ipairs(Lighting:GetChildren()) do
+        if obj:IsA("Atmosphere")
+        or obj:IsA("BloomEffect")
+        or obj:IsA("ColorCorrectionEffect")
+        or obj:IsA("SunRaysEffect")
+        or obj:IsA("DepthOfFieldEffect") then
+            obj.Enabled = false
+        end
+    end
+end
+
+local function ApplyFullBright()
+    if not FullBright then
+        return
+    end
+
+    Lighting.Brightness = BrightnessValue
+    Lighting.ExposureCompensation = BrightnessValue / 2
+    Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+    Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+    Lighting.ColorShift_Top = Color3.fromRGB(255, 255, 255)
+    Lighting.ColorShift_Bottom = Color3.fromRGB(255, 255, 255)
+    Lighting.GlobalShadows = false
+end
+
+local function RestoreLighting()
+    if AntiDark or FullBright then
+        if AntiDark then
+            ApplyAntiDark()
+        end
+
+        if FullBright then
+            ApplyFullBright()
+        end
+
+        return
+    end
+
+    Lighting.Brightness = OriginalLighting.Brightness
+    Lighting.ClockTime = OriginalLighting.ClockTime
+    Lighting.GlobalShadows = OriginalLighting.GlobalShadows
+    Lighting.ExposureCompensation = OriginalLighting.ExposureCompensation
+    Lighting.Ambient = OriginalLighting.Ambient
+    Lighting.OutdoorAmbient = OriginalLighting.OutdoorAmbient
+    Lighting.ColorShift_Top = OriginalLighting.ColorShift_Top
+    Lighting.ColorShift_Bottom = OriginalLighting.ColorShift_Bottom
+
+    for obj, enabled in pairs(OriginalEffects) do
+        if obj and obj.Parent then
+            obj.Enabled = enabled
+        end
+    end
+end
+
+LightingTab:Toggle({
+    Title = "Anti Dark",
+    Desc = "Tắt bóng tối, shadow và hiệu ứng làm tối",
+    Value = false,
+    Callback = function(Value)
+        AntiDark = Value
+
+        if Value then
+            ApplyAntiDark()
+        else
+            RestoreLighting()
+        end
+    end
+})
+
+LightingTab:Toggle({
+    Title = "Full Bright",
+    Desc = "Tăng độ sáng toàn bộ môi trường",
+    Value = false,
+    Callback = function(Value)
+        FullBright = Value
+
+        if Value then
+            ApplyFullBright()
+        else
+            RestoreLighting()
+        end
+    end
+})
+
+LightingTab:Slider({
+    Title = "Brightness",
+    Desc = "Điều chỉnh độ sáng của Full Bright",
+    Step = 0.1,
+    Value = {
+        Min = 0,
+        Max = 10,
+        Default = 5,
+    },
+    Callback = function(Value)
+        BrightnessValue = Value
+
+        if FullBright then
+            ApplyFullBright()
+        end
+    end
+})
+
+Lighting.ChildAdded:Connect(function(obj)
+    if obj:IsA("Atmosphere")
+    or obj:IsA("BloomEffect")
+    or obj:IsA("ColorCorrectionEffect")
+    or obj:IsA("SunRaysEffect")
+    or obj:IsA("DepthOfFieldEffect") then
+
+        OriginalEffects[obj] = obj.Enabled
+
+        task.wait()
+
+        if AntiDark then
+            obj.Enabled = false
+        end
+    end
+
+    if AntiDark then
+        task.defer(ApplyAntiDark)
+    end
+
+    if FullBright then
+        task.defer(ApplyFullBright)
+    end
+end)
+
+task.spawn(function()
+    while task.wait(0.5) do
+        if AntiDark then
+            ApplyAntiDark()
+        end
+
+        if FullBright then
+            ApplyFullBright()
+        end
+    end
+end)
+
 local SettingsTab = Window:Tab({
     Title = "Theme",
     Icon = "settings",
-    IconColor = Blue,
+    IconColor = Black,
     IconShape = "Square",
     Border = true,
     Locked = false,
