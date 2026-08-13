@@ -1,0 +1,2480 @@
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+
+WindUI:SetFont("rbxassetid://12187375422")
+
+--// ═══════════════════════════════════════
+--// PREMIUM BLACK • ELECTRIC BLUE THEME
+--// ═══════════════════════════════════════
+
+WindUI:AddTheme({
+    Name = "ToxicOrange",
+
+    Primary = Color3.fromHex("#FF6A00"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#0D0602"),
+
+    Background = Color3.fromHex("#0D0602"),
+    BackgroundTransparency = 0,
+
+    Hover = Color3.fromHex("#FF6A00"),
+
+    PanelBackground = Color3.fromHex("#180C05"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#0D0602"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#C89B7B"),
+    WindowTopbarIcon = Color3.fromHex("#FF6A00"),
+    WindowTopbarButtonIcon = Color3.fromHex("#FF6A00"),
+
+    WindowSearchBarBackground = Color3.fromHex("#100803"),
+
+    TabBackground = Color3.fromHex("#180C05"),
+    TabBackgroundHover = Color3.fromHex("#FF6A00"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#FF6A00"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#FFE6D1"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#FF6A00"),
+
+    TabIcon = Color3.fromHex("#FF6A00"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#FF6A00"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#180C05"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("ToxicOrangeHover", "#FF6A00", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#C89B7B"),
+    ElementIcon = Color3.fromHex("#FF6A00"),
+
+    PopupBackground = Color3.fromHex("#0D0602"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#D2A585"),
+    PopupIcon = Color3.fromHex("#FF6A00"),
+
+    DialogBackground = Color3.fromHex("#0D0602"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#D2A585"),
+    DialogIcon = Color3.fromHex("#FF6A00"),
+
+    Toggle = Color3.fromHex("#FF6A00"),
+    ToggleBar = Color3.fromHex("#FFE6D1"),
+
+    Checkbox = Color3.fromHex("#FF6A00"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#FF6A00"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#FF6A00"),
+    Slider = Color3.fromHex("#FF6A00"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#B84C00"),
+    SliderIconTo = Color3.fromHex("#FF6A00"),
+
+    Tooltip = Color3.fromHex("#180C05"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#FF6A00"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#FF6A00"),
+    SectionIcon = Color3.fromHex("#FF6A00"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#FF6A00"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#FF6A00"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#180C05"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#FF6A00"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#0D0602"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#D2A585"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#FF6A00"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#FF6A00"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#FF6A00"),
+
+    LabelBackground = Color3.fromHex("#180C05"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+WindUI:AddTheme({
+    Name = "RoyalBlue",
+
+    Primary = Color3.fromHex("#4169E1"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#050713"),
+
+    Background = Color3.fromHex("#050713"),
+    BackgroundTransparency = 0,
+
+    Hover = Color3.fromHex("#4169E1"),
+
+    PanelBackground = Color3.fromHex("#0A1022"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#050713"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#8798CF"),
+    WindowTopbarIcon = Color3.fromHex("#4169E1"),
+    WindowTopbarButtonIcon = Color3.fromHex("#4169E1"),
+
+    WindowSearchBarBackground = Color3.fromHex("#080D1B"),
+
+    TabBackground = Color3.fromHex("#0A1022"),
+    TabBackgroundHover = Color3.fromHex("#4169E1"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#4169E1"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#DEE7FF"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#4169E1"),
+
+    TabIcon = Color3.fromHex("#4169E1"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#4169E1"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#0A1022"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("RoyalBlueHover", "#4169E1", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#8798CF"),
+    ElementIcon = Color3.fromHex("#4169E1"),
+
+    PopupBackground = Color3.fromHex("#050713"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#A5B4E0"),
+    PopupIcon = Color3.fromHex("#4169E1"),
+
+    DialogBackground = Color3.fromHex("#050713"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#A5B4E0"),
+    DialogIcon = Color3.fromHex("#4169E1"),
+
+    Toggle = Color3.fromHex("#4169E1"),
+    ToggleBar = Color3.fromHex("#DEE7FF"),
+
+    Checkbox = Color3.fromHex("#4169E1"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#4169E1"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#4169E1"),
+    Slider = Color3.fromHex("#4169E1"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#29489F"),
+    SliderIconTo = Color3.fromHex("#4169E1"),
+
+    Tooltip = Color3.fromHex("#0A1022"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#4169E1"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#4169E1"),
+    SectionIcon = Color3.fromHex("#4169E1"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#4169E1"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#4169E1"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#0A1022"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#4169E1"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#050713"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#A5B4E0"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#4169E1"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#4169E1"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#4169E1"),
+
+    LabelBackground = Color3.fromHex("#0A1022"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+WindUI:AddTheme({
+    Name = "Diamond",
+
+    Primary = Color3.fromHex("#DDE7F2"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#070A0E"),
+
+    Background = Color3.fromHex("#070A0E"),
+    BackgroundTransparency = 0,
+
+    Hover = Color3.fromHex("#DDE7F2"),
+
+    PanelBackground = Color3.fromHex("#10151C"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#070A0E"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#9BAEC2"),
+    WindowTopbarIcon = Color3.fromHex("#DDE7F2"),
+    WindowTopbarButtonIcon = Color3.fromHex("#DDE7F2"),
+
+    WindowSearchBarBackground = Color3.fromHex("#0B1016"),
+
+    TabBackground = Color3.fromHex("#10151C"),
+    TabBackgroundHover = Color3.fromHex("#DDE7F2"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#DDE7F2"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#F3F7FC"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#DDE7F2"),
+
+    TabIcon = Color3.fromHex("#DDE7F2"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#DDE7F2"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#10151C"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("DiamondHover", "#DDE7F2", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#9BAEC2"),
+    ElementIcon = Color3.fromHex("#DDE7F2"),
+
+    PopupBackground = Color3.fromHex("#070A0E"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#AFC0D2"),
+    PopupIcon = Color3.fromHex("#DDE7F2"),
+
+    DialogBackground = Color3.fromHex("#070A0E"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#AFC0D2"),
+    DialogIcon = Color3.fromHex("#DDE7F2"),
+
+    Toggle = Color3.fromHex("#DDE7F2"),
+    ToggleBar = Color3.fromHex("#F3F7FC"),
+
+    Checkbox = Color3.fromHex("#DDE7F2"),
+    CheckboxIcon = Color3.fromHex("#070A0E"),
+    CheckboxBorder = Color3.fromHex("#DDE7F2"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#DDE7F2"),
+    Slider = Color3.fromHex("#DDE7F2"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#899AAA"),
+    SliderIconTo = Color3.fromHex("#DDE7F2"),
+
+    Tooltip = Color3.fromHex("#10151C"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#DDE7F2"),
+    TooltipSecondaryText = Color3.fromHex("#070A0E"),
+
+    TabSectionIcon = Color3.fromHex("#DDE7F2"),
+    SectionIcon = Color3.fromHex("#DDE7F2"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#DDE7F2"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#DDE7F2"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#10151C"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#DDE7F2"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#070A0E"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#AFC0D2"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#DDE7F2"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#DDE7F2"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#DDE7F2"),
+
+    LabelBackground = Color3.fromHex("#10151C"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+WindUI:AddTheme({
+    Name = "DeepOcean",
+
+    Primary = Color3.fromHex("#0066FF"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#020611"),
+
+    Background = Color3.fromHex("#020611"),
+    BackgroundTransparency = 0,
+
+    Hover = Color3.fromHex("#0066FF"),
+
+    PanelBackground = Color3.fromHex("#071020"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#020611"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#7FA4D6"),
+    WindowTopbarIcon = Color3.fromHex("#0066FF"),
+    WindowTopbarButtonIcon = Color3.fromHex("#0066FF"),
+
+    WindowSearchBarBackground = Color3.fromHex("#050B17"),
+
+    TabBackground = Color3.fromHex("#071020"),
+    TabBackgroundHover = Color3.fromHex("#0066FF"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#0066FF"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#DCEBFF"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#0066FF"),
+
+    TabIcon = Color3.fromHex("#0066FF"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#0066FF"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#081322"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("DeepOceanHover", "#0066FF", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#7FA4D6"),
+    ElementIcon = Color3.fromHex("#0066FF"),
+
+    PopupBackground = Color3.fromHex("#020611"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#9CB7D9"),
+    PopupIcon = Color3.fromHex("#0066FF"),
+
+    DialogBackground = Color3.fromHex("#020611"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#9CB7D9"),
+    DialogIcon = Color3.fromHex("#0066FF"),
+
+    Toggle = Color3.fromHex("#0066FF"),
+    ToggleBar = Color3.fromHex("#DCEBFF"),
+
+    Checkbox = Color3.fromHex("#0066FF"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#0066FF"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#0066FF"),
+    Slider = Color3.fromHex("#0066FF"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#12499C"),
+    SliderIconTo = Color3.fromHex("#0066FF"),
+
+    Tooltip = Color3.fromHex("#071020"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#0066FF"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#0066FF"),
+    SectionIcon = Color3.fromHex("#0066FF"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#0066FF"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#0066FF"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#071020"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#0066FF"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#020611"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#9CB7D9"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#0066FF"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#0066FF"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#0066FF"),
+
+    LabelBackground = Color3.fromHex("#071020"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+WindUI:AddTheme({
+    Name = "Emerald",
+
+    Primary = Color3.fromHex("#00C896"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#020A08"),
+
+    Background = Color3.fromHex("#020A08"),
+    BackgroundTransparency = 0,
+
+    Hover = Color3.fromHex("#00C896"),
+
+    PanelBackground = Color3.fromHex("#071510"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#020A08"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#83BBAA"),
+    WindowTopbarIcon = Color3.fromHex("#00C896"),
+    WindowTopbarButtonIcon = Color3.fromHex("#00C896"),
+
+    WindowSearchBarBackground = Color3.fromHex("#05110D"),
+
+    TabBackground = Color3.fromHex("#071510"),
+    TabBackgroundHover = Color3.fromHex("#00C896"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#00C896"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#D9FFF3"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#00C896"),
+
+    TabIcon = Color3.fromHex("#00C896"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#00C896"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#071510"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("EmeraldHover", "#00C896", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#83BBAA"),
+    ElementIcon = Color3.fromHex("#00C896"),
+
+    PopupBackground = Color3.fromHex("#020A08"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#A2D5C6"),
+    PopupIcon = Color3.fromHex("#00C896"),
+
+    DialogBackground = Color3.fromHex("#020A08"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#A2D5C6"),
+    DialogIcon = Color3.fromHex("#00C896"),
+
+    Toggle = Color3.fromHex("#00C896"),
+    ToggleBar = Color3.fromHex("#D9FFF3"),
+
+    Checkbox = Color3.fromHex("#00C896"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#00C896"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#00C896"),
+    Slider = Color3.fromHex("#00C896"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#008B69"),
+    SliderIconTo = Color3.fromHex("#00C896"),
+
+    Tooltip = Color3.fromHex("#071510"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#00C896"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#00C896"),
+    SectionIcon = Color3.fromHex("#00C896"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#00C896"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#00C896"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#071510"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#00C896"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#020A08"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#A2D5C6"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#00C896"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#00C896"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#00C896"),
+
+    LabelBackground = Color3.fromHex("#071510"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+WindUI:AddTheme({
+         Name = "PremiumBlue", 
+    -- Core
+    Primary = Color3.fromHex("#168CFF"),
+
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#080B10"),
+
+    -- Main background
+    Background = Color3.fromHex("#05070A"),
+    BackgroundTransparency = 0,
+
+    Hover = Color3.fromHex("#168CFF"),
+
+    -- Panels
+    PanelBackground = Color3.fromHex("#0B1018"),
+    PanelBackgroundTransparency = 0.12,
+
+    WindowBackground = Color3.fromHex("#05070A"),
+
+    WindowShadow = Color3.fromHex("#000000"),
+
+    -- Topbar
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#7FA9D6"),
+    WindowTopbarIcon = Color3.fromHex("#168CFF"),
+    WindowTopbarButtonIcon = Color3.fromHex("#168CFF"),
+
+    WindowSearchBarBackground = Color3.fromHex("#080C12"),
+
+    -- Tabs
+    TabBackground = Color3.fromHex("#0A1018"),
+
+    TabBackgroundHover = Color3.fromHex("#168CFF"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#168CFF"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#D7E8FF"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#168CFF"),
+
+    TabIcon = Color3.fromHex("#5C8FC4"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    -- Blue borders
+    TabBorder = Color3.fromHex("#168CFF"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    -- Elements
+    ElementBackground = Color3.fromHex("#0C121B"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("ElementBackground", "#168CFF", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#7F9DBD"),
+    ElementIcon = Color3.fromHex("#168CFF"),
+
+    -- Popup
+    PopupBackground = Color3.fromHex("#070A0F"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#9AB6D3"),
+    PopupIcon = Color3.fromHex("#168CFF"),
+
+    -- Dialog
+    DialogBackground = Color3.fromHex("#070A0F"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#9AB6D3"),
+    DialogIcon = Color3.fromHex("#168CFF"),
+
+    -- Toggle
+    Toggle = Color3.fromHex("#168CFF"),
+    ToggleBar = Color3.fromHex("#DCEEFF"),
+
+    -- Checkbox
+    Checkbox = Color3.fromHex("#168CFF"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#168CFF"),
+    CheckboxBorderTransparency = 0.35,
+
+    -- Slider
+    SliderIcon = Color3.fromHex("#168CFF"),
+    Slider = Color3.fromHex("#168CFF"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#4D8DCC"),
+    SliderIconTo = Color3.fromHex("#168CFF"),
+
+    -- Tooltip
+    Tooltip = Color3.fromHex("#0A111A"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#168CFF"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    -- Sections
+    TabSectionIcon = Color3.fromHex("#168CFF"),
+
+    SectionIcon = Color3.fromHex("#168CFF"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#168CFF"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#168CFF"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#09111A"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    -- Search
+    SearchBarBorder = Color3.fromHex("#168CFF"),
+    SearchBarBorderTransparency = 0.45,
+
+    -- Notifications
+    Notification = Color3.fromHex("#070B11"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#9AB6D3"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#168CFF"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#168CFF"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#168CFF"),
+
+    LabelBackground = Color3.fromHex("#0A111A"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+WindUI:AddTheme({
+    Name = "MidnightPurple",
+
+    Primary = Color3.fromHex("#9B5CFF"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#0A0710"),
+    Background = Color3.fromHex("#07050B"),
+    BackgroundTransparency = 0,
+
+    Hover = Color3.fromHex("#9B5CFF"),
+
+    PanelBackground = Color3.fromHex("#100B18"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#07050B"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#B69ADD"),
+    WindowTopbarIcon = Color3.fromHex("#9B5CFF"),
+    WindowTopbarButtonIcon = Color3.fromHex("#9B5CFF"),
+
+    WindowSearchBarBackground = Color3.fromHex("#0D0914"),
+
+    TabBackground = Color3.fromHex("#100B18"),
+    TabBackgroundHover = Color3.fromHex("#9B5CFF"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#9B5CFF"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#E8DDFF"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#9B5CFF"),
+
+    TabIcon = Color3.fromHex("#9B5CFF"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#9B5CFF"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#100B18"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("PurpleElementHover", "#9B5CFF", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#A994C7"),
+    ElementIcon = Color3.fromHex("#9B5CFF"),
+
+    PopupBackground = Color3.fromHex("#0A0710"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#BBA9D3"),
+    PopupIcon = Color3.fromHex("#9B5CFF"),
+
+    DialogBackground = Color3.fromHex("#0A0710"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#BBA9D3"),
+    DialogIcon = Color3.fromHex("#9B5CFF"),
+
+    Toggle = Color3.fromHex("#9B5CFF"),
+    ToggleBar = Color3.fromHex("#E9DDFF"),
+
+    Checkbox = Color3.fromHex("#9B5CFF"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#9B5CFF"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#9B5CFF"),
+    Slider = Color3.fromHex("#9B5CFF"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#7040B8"),
+    SliderIconTo = Color3.fromHex("#9B5CFF"),
+
+    Tooltip = Color3.fromHex("#100B18"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#9B5CFF"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#9B5CFF"),
+    SectionIcon = Color3.fromHex("#9B5CFF"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#9B5CFF"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#9B5CFF"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#0D0914"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#9B5CFF"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#0A0710"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#BBA9D3"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#9B5CFF"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#9B5CFF"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#9B5CFF"),
+
+    LabelBackground = Color3.fromHex("#100B18"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+
+-- Crimson
+WindUI:AddTheme({
+    Name = "Crimson",
+
+    Primary = Color3.fromHex("#FF3158"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#10070A"),
+    Background = Color3.fromHex("#080507"),
+    BackgroundTransparency = 0,
+
+    Hover = Color3.fromHex("#FF3158"),
+
+    PanelBackground = Color3.fromHex("#150A0D"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#080507"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#D99BA8"),
+    WindowTopbarIcon = Color3.fromHex("#FF3158"),
+    WindowTopbarButtonIcon = Color3.fromHex("#FF3158"),
+
+    WindowSearchBarBackground = Color3.fromHex("#10080B"),
+
+    TabBackground = Color3.fromHex("#13090C"),
+    TabBackgroundHover = Color3.fromHex("#FF3158"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#FF3158"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#FFE1E6"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#FF3158"),
+
+    TabIcon = Color3.fromHex("#FF3158"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#FF3158"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#14090C"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#C89AA3"),
+    ElementIcon = Color3.fromHex("#FF3158"),
+
+    PopupBackground = Color3.fromHex("#10070A"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#D0A5AD"),
+    PopupIcon = Color3.fromHex("#FF3158"),
+
+    DialogBackground = Color3.fromHex("#10070A"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#D0A5AD"),
+    DialogIcon = Color3.fromHex("#FF3158"),
+
+    Toggle = Color3.fromHex("#FF3158"),
+    ToggleBar = Color3.fromHex("#FFE1E6"),
+
+    Checkbox = Color3.fromHex("#FF3158"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#FF3158"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#FF3158"),
+    Slider = Color3.fromHex("#FF3158"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#A51D39"),
+    SliderIconTo = Color3.fromHex("#FF3158"),
+
+    Tooltip = Color3.fromHex("#13090C"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#FF3158"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#FF3158"),
+    SectionIcon = Color3.fromHex("#FF3158"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#FF3158"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#FF3158"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#10070A"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#FF3158"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#10070A"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#D0A5AD"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#FF3158"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#FF3158"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#FF3158"),
+
+    LabelBackground = Color3.fromHex("#13090C"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+--// ═════════════════════════════════════════════════════════════
+--// EXTRA PREMIUM THEMES
+--// ═════════════════════════════════════════════════════════════
+
+-- 💜 NEON PURPLE
+WindUI:AddTheme({
+    Name = "NeonPurple",
+
+    Primary = Color3.fromHex("#A855F7"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#0B0710"),
+    Background = Color3.fromHex("#07050A"),
+    BackgroundTransparency = 0,
+    Hover = Color3.fromHex("#A855F7"),
+
+    PanelBackground = Color3.fromHex("#100A17"),
+    PanelBackgroundTransparency = 0.08,
+    WindowBackground = Color3.fromHex("#07050A"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#C9A8E8"),
+    WindowTopbarIcon = Color3.fromHex("#A855F7"),
+    WindowTopbarButtonIcon = Color3.fromHex("#A855F7"),
+
+    WindowSearchBarBackground = Color3.fromHex("#0D0913"),
+
+    TabBackground = Color3.fromHex("#100A17"),
+    TabBackgroundHover = Color3.fromHex("#A855F7"),
+    TabBackgroundHoverTransparency = 0.88,
+    TabBackgroundActive = Color3.fromHex("#A855F7"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#E9D5FF"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#A855F7"),
+
+    TabIcon = Color3.fromHex("#A855F7"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#A855F7"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#100A17"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("PurpleHover", "#A855F7", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#B89ACF"),
+    ElementIcon = Color3.fromHex("#A855F7"),
+
+    PopupBackground = Color3.fromHex("#0B0710"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#C4A8D8"),
+    PopupIcon = Color3.fromHex("#A855F7"),
+
+    DialogBackground = Color3.fromHex("#0B0710"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#C4A8D8"),
+    DialogIcon = Color3.fromHex("#A855F7"),
+
+    Toggle = Color3.fromHex("#A855F7"),
+    ToggleBar = Color3.fromHex("#E9D5FF"),
+
+    Checkbox = Color3.fromHex("#A855F7"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#A855F7"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#A855F7"),
+    Slider = Color3.fromHex("#A855F7"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#7E22CE"),
+    SliderIconTo = Color3.fromHex("#A855F7"),
+
+    Tooltip = Color3.fromHex("#100A17"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#A855F7"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#A855F7"),
+    SectionIcon = Color3.fromHex("#A855F7"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#A855F7"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#A855F7"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#0D0913"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#A855F7"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#0B0710"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+    NotificationContent = Color3.fromHex("#C4A8D8"),
+    NotificationContentTransparency = 0.2,
+    NotificationDuration = Color3.fromHex("#A855F7"),
+    NotificationDurationTransparency = 0.2,
+    NotificationBorder = Color3.fromHex("#A855F7"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#A855F7"),
+
+    LabelBackground = Color3.fromHex("#100A17"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+
+--// 💚 CYBER GREEN
+WindUI:AddTheme({
+    Name = "CyberGreen",
+
+    Primary = Color3.fromHex("#00E676"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#04100A"),
+    Background = Color3.fromHex("#030806"),
+    BackgroundTransparency = 0,
+    Hover = Color3.fromHex("#00E676"),
+
+    PanelBackground = Color3.fromHex("#07130D"),
+    PanelBackgroundTransparency = 0.08,
+    WindowBackground = Color3.fromHex("#030806"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#8FD9AE"),
+    WindowTopbarIcon = Color3.fromHex("#00E676"),
+    WindowTopbarButtonIcon = Color3.fromHex("#00E676"),
+
+    WindowSearchBarBackground = Color3.fromHex("#06100A"),
+
+    TabBackground = Color3.fromHex("#07130D"),
+    TabBackgroundHover = Color3.fromHex("#00E676"),
+    TabBackgroundHoverTransparency = 0.88,
+    TabBackgroundActive = Color3.fromHex("#00E676"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#D8FFE7"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#00E676"),
+
+    TabIcon = Color3.fromHex("#00E676"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#00E676"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#07130D"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("GreenHover", "#00E676", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#8DB9A0"),
+    ElementIcon = Color3.fromHex("#00E676"),
+
+    PopupBackground = Color3.fromHex("#04100A"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#A2D5B5"),
+    PopupIcon = Color3.fromHex("#00E676"),
+
+    DialogBackground = Color3.fromHex("#04100A"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#A2D5B5"),
+    DialogIcon = Color3.fromHex("#00E676"),
+
+    Toggle = Color3.fromHex("#00E676"),
+    ToggleBar = Color3.fromHex("#D9FFE7"),
+
+    Checkbox = Color3.fromHex("#00E676"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#00E676"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#00E676"),
+    Slider = Color3.fromHex("#00E676"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#009B50"),
+    SliderIconTo = Color3.fromHex("#00E676"),
+
+    Tooltip = Color3.fromHex("#07130D"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#00E676"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#00E676"),
+    SectionIcon = Color3.fromHex("#00E676"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#00E676"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#00E676"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#06100A"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#00E676"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#04100A"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+    NotificationContent = Color3.fromHex("#A2D5B5"),
+    NotificationContentTransparency = 0.2,
+    NotificationDuration = Color3.fromHex("#00E676"),
+    NotificationDurationTransparency = 0.2,
+    NotificationBorder = Color3.fromHex("#00E676"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#00E676"),
+
+    LabelBackground = Color3.fromHex("#07130D"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+--// ═════════════════════════════════════════════════════════════
+--// ❤️ RUBY RED
+--// ═════════════════════════════════════════════════════════════
+
+WindUI:AddTheme({
+    Name = "RubyRed",
+
+    Primary = Color3.fromHex("#FF1744"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#100407"),
+    Background = Color3.fromHex("#080305"),
+    BackgroundTransparency = 0,
+    Hover = Color3.fromHex("#FF1744"),
+
+    PanelBackground = Color3.fromHex("#14070A"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#080305"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#D99AA5"),
+    WindowTopbarIcon = Color3.fromHex("#FF1744"),
+    WindowTopbarButtonIcon = Color3.fromHex("#FF1744"),
+
+    WindowSearchBarBackground = Color3.fromHex("#100509"),
+
+    TabBackground = Color3.fromHex("#14070A"),
+    TabBackgroundHover = Color3.fromHex("#FF1744"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#FF1744"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#FFE0E6"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#FF1744"),
+
+    TabIcon = Color3.fromHex("#FF1744"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#FF1744"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#14070A"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("RubyHover", "#FF1744", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#C99AA3"),
+    ElementIcon = Color3.fromHex("#FF1744"),
+
+    PopupBackground = Color3.fromHex("#100407"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#D0A3AC"),
+    PopupIcon = Color3.fromHex("#FF1744"),
+
+    DialogBackground = Color3.fromHex("#100407"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#D0A3AC"),
+    DialogIcon = Color3.fromHex("#FF1744"),
+
+    Toggle = Color3.fromHex("#FF1744"),
+    ToggleBar = Color3.fromHex("#FFE0E6"),
+
+    Checkbox = Color3.fromHex("#FF1744"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#FF1744"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#FF1744"),
+    Slider = Color3.fromHex("#FF1744"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#B20F31"),
+    SliderIconTo = Color3.fromHex("#FF1744"),
+
+    Tooltip = Color3.fromHex("#14070A"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#FF1744"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#FF1744"),
+    SectionIcon = Color3.fromHex("#FF1744"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#FF1744"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#FF1744"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#100509"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#FF1744"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#100407"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#D0A3AC"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#FF1744"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#FF1744"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#FF1744"),
+
+    LabelBackground = Color3.fromHex("#14070A"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+
+--// ═════════════════════════════════════════════════════════════
+--// 💛 GOLDEN
+--// ═════════════════════════════════════════════════════════════
+
+WindUI:AddTheme({
+    Name = "Golden",
+
+    Primary = Color3.fromHex("#FFD21F"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#100D03"),
+    Background = Color3.fromHex("#080702"),
+    BackgroundTransparency = 0,
+    Hover = Color3.fromHex("#FFD21F"),
+
+    PanelBackground = Color3.fromHex("#151105"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#080702"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#D8C37A"),
+    WindowTopbarIcon = Color3.fromHex("#FFD21F"),
+    WindowTopbarButtonIcon = Color3.fromHex("#FFD21F"),
+
+    WindowSearchBarBackground = Color3.fromHex("#100D03"),
+
+    TabBackground = Color3.fromHex("#151105"),
+    TabBackgroundHover = Color3.fromHex("#FFD21F"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#FFD21F"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#FFF4C7"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#FFD21F"),
+
+    TabIcon = Color3.fromHex("#FFD21F"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#FFD21F"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#151105"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("GoldenHover", "#FFD21F", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#C7B878"),
+    ElementIcon = Color3.fromHex("#FFD21F"),
+
+    PopupBackground = Color3.fromHex("#100D03"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#D2C383"),
+    PopupIcon = Color3.fromHex("#FFD21F"),
+
+    DialogBackground = Color3.fromHex("#100D03"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#D2C383"),
+    DialogIcon = Color3.fromHex("#FFD21F"),
+
+    Toggle = Color3.fromHex("#FFD21F"),
+    ToggleBar = Color3.fromHex("#FFF4C7"),
+
+    Checkbox = Color3.fromHex("#FFD21F"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#FFD21F"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#FFD21F"),
+    Slider = Color3.fromHex("#FFD21F"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#B89500"),
+    SliderIconTo = Color3.fromHex("#FFD21F"),
+
+    Tooltip = Color3.fromHex("#151105"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#FFD21F"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#FFD21F"),
+    SectionIcon = Color3.fromHex("#FFD21F"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#FFD21F"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#FFD21F"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#100D03"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#FFD21F"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#100D03"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#D2C383"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#FFD21F"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#FFD21F"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#FFD21F"),
+
+    LabelBackground = Color3.fromHex("#151105"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+
+--// ═════════════════════════════════════════════════════════════
+--// 🩵 AQUA
+--// ═════════════════════════════════════════════════════════════
+
+WindUI:AddTheme({
+    Name = "Aqua",
+
+    Primary = Color3.fromHex("#00E5FF"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#031014"),
+    Background = Color3.fromHex("#02080A"),
+    BackgroundTransparency = 0,
+    Hover = Color3.fromHex("#00E5FF"),
+
+    PanelBackground = Color3.fromHex("#051318"),
+    PanelBackgroundTransparency = 0.08,
+
+    WindowBackground = Color3.fromHex("#02080A"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#88CFD8"),
+    WindowTopbarIcon = Color3.fromHex("#00E5FF"),
+    WindowTopbarButtonIcon = Color3.fromHex("#00E5FF"),
+
+    WindowSearchBarBackground = Color3.fromHex("#041014"),
+
+    TabBackground = Color3.fromHex("#051318"),
+    TabBackgroundHover = Color3.fromHex("#00E5FF"),
+    TabBackgroundHoverTransparency = 0.88,
+
+    TabBackgroundActive = Color3.fromHex("#00E5FF"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#D8FBFF"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#00E5FF"),
+
+    TabIcon = Color3.fromHex("#00E5FF"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#00E5FF"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#051318"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("AquaHover", "#00E5FF", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#8FC4CB"),
+    ElementIcon = Color3.fromHex("#00E5FF"),
+
+    PopupBackground = Color3.fromHex("#031014"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#9ED1D8"),
+    PopupIcon = Color3.fromHex("#00E5FF"),
+
+    DialogBackground = Color3.fromHex("#031014"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#9ED1D8"),
+    DialogIcon = Color3.fromHex("#00E5FF"),
+
+    Toggle = Color3.fromHex("#00E5FF"),
+    ToggleBar = Color3.fromHex("#D8FBFF"),
+
+    Checkbox = Color3.fromHex("#00E5FF"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#00E5FF"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#00E5FF"),
+    Slider = Color3.fromHex("#00E5FF"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#0099AA"),
+    SliderIconTo = Color3.fromHex("#00E5FF"),
+
+    Tooltip = Color3.fromHex("#051318"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#00E5FF"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#00E5FF"),
+    SectionIcon = Color3.fromHex("#00E5FF"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#00E5FF"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#00E5FF"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#041014"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#00E5FF"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#031014"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+
+    NotificationContent = Color3.fromHex("#9ED1D8"),
+    NotificationContentTransparency = 0.2,
+
+    NotificationDuration = Color3.fromHex("#00E5FF"),
+    NotificationDurationTransparency = 0.2,
+
+    NotificationBorder = Color3.fromHex("#00E5FF"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#00E5FF"),
+
+    LabelBackground = Color3.fromHex("#051318"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+--// 🩵 ICE BLUE
+WindUI:AddTheme({
+    Name = "IceBlue",
+
+    Primary = Color3.fromHex("#38BDF8"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#061018"),
+    Background = Color3.fromHex("#04090D"),
+    BackgroundTransparency = 0,
+    Hover = Color3.fromHex("#38BDF8"),
+
+    PanelBackground = Color3.fromHex("#08131B"),
+    PanelBackgroundTransparency = 0.08,
+    WindowBackground = Color3.fromHex("#04090D"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#91C7DD"),
+    WindowTopbarIcon = Color3.fromHex("#38BDF8"),
+    WindowTopbarButtonIcon = Color3.fromHex("#38BDF8"),
+
+    WindowSearchBarBackground = Color3.fromHex("#071118"),
+
+    TabBackground = Color3.fromHex("#08131B"),
+    TabBackgroundHover = Color3.fromHex("#38BDF8"),
+    TabBackgroundHoverTransparency = 0.88,
+    TabBackgroundActive = Color3.fromHex("#38BDF8"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#DDF6FF"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#38BDF8"),
+
+    TabIcon = Color3.fromHex("#38BDF8"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#38BDF8"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#08131B"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("IceHover", "#38BDF8", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#91B7C8"),
+    ElementIcon = Color3.fromHex("#38BDF8"),
+
+    PopupBackground = Color3.fromHex("#061018"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#A3C8D8"),
+    PopupIcon = Color3.fromHex("#38BDF8"),
+
+    DialogBackground = Color3.fromHex("#061018"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#A3C8D8"),
+    DialogIcon = Color3.fromHex("#38BDF8"),
+
+    Toggle = Color3.fromHex("#38BDF8"),
+    ToggleBar = Color3.fromHex("#DDF6FF"),
+
+    Checkbox = Color3.fromHex("#38BDF8"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#38BDF8"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#38BDF8"),
+    Slider = Color3.fromHex("#38BDF8"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#1684B8"),
+    SliderIconTo = Color3.fromHex("#38BDF8"),
+
+    Tooltip = Color3.fromHex("#08131B"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#38BDF8"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#38BDF8"),
+    SectionIcon = Color3.fromHex("#38BDF8"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#38BDF8"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#38BDF8"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#071118"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#38BDF8"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#061018"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+    NotificationContent = Color3.fromHex("#A3C8D8"),
+    NotificationContentTransparency = 0.2,
+    NotificationDuration = Color3.fromHex("#38BDF8"),
+    NotificationDurationTransparency = 0.2,
+    NotificationBorder = Color3.fromHex("#38BDF8"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#38BDF8"),
+
+    LabelBackground = Color3.fromHex("#08131B"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+
+--// 🧡 SOLAR ORANGE
+WindUI:AddTheme({
+    Name = "SolarOrange",
+
+    Primary = Color3.fromHex("#FF8A00"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#100A04"),
+    Background = Color3.fromHex("#090603"),
+    BackgroundTransparency = 0,
+    Hover = Color3.fromHex("#FF8A00"),
+
+    PanelBackground = Color3.fromHex("#150D06"),
+    PanelBackgroundTransparency = 0.08,
+    WindowBackground = Color3.fromHex("#090603"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#D9B084"),
+    WindowTopbarIcon = Color3.fromHex("#FF8A00"),
+    WindowTopbarButtonIcon = Color3.fromHex("#FF8A00"),
+
+    WindowSearchBarBackground = Color3.fromHex("#100A05"),
+
+    TabBackground = Color3.fromHex("#150D06"),
+    TabBackgroundHover = Color3.fromHex("#FF8A00"),
+    TabBackgroundHoverTransparency = 0.88,
+    TabBackgroundActive = Color3.fromHex("#FF8A00"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#FFE8CC"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#FF8A00"),
+
+    TabIcon = Color3.fromHex("#FF8A00"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#FF8A00"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#150D06"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("OrangeHover", "#FF8A00", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#C5A47F"),
+    ElementIcon = Color3.fromHex("#FF8A00"),
+
+    PopupBackground = Color3.fromHex("#100A04"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#D2AE83"),
+    PopupIcon = Color3.fromHex("#FF8A00"),
+
+    DialogBackground = Color3.fromHex("#100A04"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#D2AE83"),
+    DialogIcon = Color3.fromHex("#FF8A00"),
+
+    Toggle = Color3.fromHex("#FF8A00"),
+    ToggleBar = Color3.fromHex("#FFE8CC"),
+
+    Checkbox = Color3.fromHex("#FF8A00"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#FF8A00"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#FF8A00"),
+    Slider = Color3.fromHex("#FF8A00"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#B85F00"),
+    SliderIconTo = Color3.fromHex("#FF8A00"),
+
+    Tooltip = Color3.fromHex("#150D06"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#FF8A00"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#FF8A00"),
+    SectionIcon = Color3.fromHex("#FF8A00"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#FF8A00"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#FF8A00"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#100A05"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#FF8A00"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#100A04"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+    NotificationContent = Color3.fromHex("#D2AE83"),
+    NotificationContentTransparency = 0.2,
+    NotificationDuration = Color3.fromHex("#FF8A00"),
+    NotificationDurationTransparency = 0.2,
+    NotificationBorder = Color3.fromHex("#FF8A00"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#FF8A00"),
+
+    LabelBackground = Color3.fromHex("#150D06"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+
+--// 🌸 ROSE PINK
+WindUI:AddTheme({
+    Name = "RosePink",
+
+    Primary = Color3.fromHex("#FF4FA3"),
+    White = Color3.fromHex("#FFFFFF"),
+    Black = Color3.fromHex("#000000"),
+
+    Dialog = Color3.fromHex("#10060C"),
+    Background = Color3.fromHex("#080408"),
+    BackgroundTransparency = 0,
+    Hover = Color3.fromHex("#FF4FA3"),
+
+    PanelBackground = Color3.fromHex("#140812"),
+    PanelBackgroundTransparency = 0.08,
+    WindowBackground = Color3.fromHex("#080408"),
+    WindowShadow = Color3.fromHex("#000000"),
+
+    WindowTopbarTitle = Color3.fromHex("#FFFFFF"),
+    WindowTopbarAuthor = Color3.fromHex("#DCA0BF"),
+    WindowTopbarIcon = Color3.fromHex("#FF4FA3"),
+    WindowTopbarButtonIcon = Color3.fromHex("#FF4FA3"),
+
+    WindowSearchBarBackground = Color3.fromHex("#0F060B"),
+
+    TabBackground = Color3.fromHex("#140812"),
+    TabBackgroundHover = Color3.fromHex("#FF4FA3"),
+    TabBackgroundHoverTransparency = 0.88,
+    TabBackgroundActive = Color3.fromHex("#FF4FA3"),
+    TabBackgroundActiveTransparency = 0.82,
+
+    TabText = Color3.fromHex("#FFE0EF"),
+    TabTextTransparency = 0.25,
+    TabTextTransparencyActive = 0,
+
+    TabTitle = Color3.fromHex("#FF4FA3"),
+
+    TabIcon = Color3.fromHex("#FF4FA3"),
+    TabIconTransparency = 0.25,
+    TabIconTransparencyActive = 0,
+
+    TabBorder = Color3.fromHex("#FF4FA3"),
+    TabBorderTransparency = 0.75,
+    TabBorderTransparencyActive = 0.15,
+
+    ElementBackground = Color3.fromHex("#140812"),
+    ElementBackgroundTransparency = 0.08,
+
+    ElementBackgroundHover =
+        WindUI.Creator:AddColor("PinkHover", "#FF4FA3", 0.90),
+
+    ElementTitle = Color3.fromHex("#FFFFFF"),
+    ElementDesc = Color3.fromHex("#C99BB3"),
+    ElementIcon = Color3.fromHex("#FF4FA3"),
+
+    PopupBackground = Color3.fromHex("#10060C"),
+    PopupBackgroundTransparency = "BackgroundTransparency",
+    PopupTitle = Color3.fromHex("#FFFFFF"),
+    PopupContent = Color3.fromHex("#D2A5BD"),
+    PopupIcon = Color3.fromHex("#FF4FA3"),
+
+    DialogBackground = Color3.fromHex("#10060C"),
+    DialogBackgroundTransparency = "BackgroundTransparency",
+    DialogTitle = Color3.fromHex("#FFFFFF"),
+    DialogContent = Color3.fromHex("#D2A5BD"),
+    DialogIcon = Color3.fromHex("#FF4FA3"),
+
+    Toggle = Color3.fromHex("#FF4FA3"),
+    ToggleBar = Color3.fromHex("#FFE0EF"),
+
+    Checkbox = Color3.fromHex("#FF4FA3"),
+    CheckboxIcon = Color3.fromHex("#FFFFFF"),
+    CheckboxBorder = Color3.fromHex("#FF4FA3"),
+    CheckboxBorderTransparency = 0.35,
+
+    SliderIcon = Color3.fromHex("#FF4FA3"),
+    Slider = Color3.fromHex("#FF4FA3"),
+    SliderThumb = Color3.fromHex("#FFFFFF"),
+    SliderIconFrom = Color3.fromHex("#B52D70"),
+    SliderIconTo = Color3.fromHex("#FF4FA3"),
+
+    Tooltip = Color3.fromHex("#140812"),
+    TooltipText = Color3.fromHex("#FFFFFF"),
+    TooltipSecondary = Color3.fromHex("#FF4FA3"),
+    TooltipSecondaryText = Color3.fromHex("#FFFFFF"),
+
+    TabSectionIcon = Color3.fromHex("#FF4FA3"),
+    SectionIcon = Color3.fromHex("#FF4FA3"),
+
+    SectionExpandIcon = Color3.fromHex("#FFFFFF"),
+    SectionExpandIconTransparency = 0.25,
+
+    SectionBox = Color3.fromHex("#FF4FA3"),
+    SectionBoxTransparency = 0.78,
+
+    SectionBoxBorder = Color3.fromHex("#FF4FA3"),
+    SectionBoxBorderTransparency = 0.35,
+
+    SectionBoxBackground = Color3.fromHex("#10060C"),
+    SectionBoxBackgroundTransparency = 0.08,
+
+    SearchBarBorder = Color3.fromHex("#FF4FA3"),
+    SearchBarBorderTransparency = 0.45,
+
+    Notification = Color3.fromHex("#10060C"),
+    NotificationTitle = Color3.fromHex("#FFFFFF"),
+    NotificationTitleTransparency = 0,
+    NotificationContent = Color3.fromHex("#D2A5BD"),
+    NotificationContentTransparency = 0.2,
+    NotificationDuration = Color3.fromHex("#FF4FA3"),
+    NotificationDurationTransparency = 0.2,
+    NotificationBorder = Color3.fromHex("#FF4FA3"),
+    NotificationBorderTransparency = 0.35,
+
+    DropdownTabBorder = Color3.fromHex("#FF4FA3"),
+
+    LabelBackground = Color3.fromHex("#140812"),
+    LabelBackgroundTransparency = 0.08,
+})
+
+local Window = WindUI:CreateWindow({
+    Title = "Best Hub",
+    Icon = "bird",
+    Author = "by sey",
+    Folder = "BeSt HuB",
+
+    Size = UDim2.fromOffset(500, 400),
+    MinSize = Vector2.new(380, 300),
+    MaxSize = Vector2.new(780, 560),
+
+    Transparent = false,
+
+    Theme = "PremiumBlue",
+
+    Resizable = true,
+
+    SideBarWidth = 165,
+
+    HideSearchBar = true,
+
+    ScrollBarEnabled = true,
+
+    User = {
+        Enabled = true,
+        Anonymous = false,
+
+        Callback = function()
+            print("nothing🤡")
+        end,
+    },
+})
+
+--// OPEN BUTTON
+Window:EditOpenButton({
+    Title = "Open Best Hub",
+    Icon = "monitor",
+
+    CornerRadius = UDim.new(0, 16),
+    StrokeThickness = 2,
+
+    Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromHex("#168CFF")),
+        ColorSequenceKeypoint.new(1, Color3.fromHex("#0B5CFF"))
+    }),
+
+    OnlyMobile = false,
+    Enabled = true,
+    Draggable = true,
+})
+
+local Blue = Color3.fromHex("#257AF7")
+
+local Tab = Window:Tab({
+    Title = "Tab Title",
+    Icon = "bird", -- optional
+    IconColor = Blue,
+	IconShape = "Square",
+	Border = true,
+    Locked = false,
+})
+
+local ESPEnabled = false
+
+local Abnormalities = workspace:WaitForChild("Abnormalities")
+local Units = workspace:WaitForChild("Units")
+
+local ESPData = {}
+local PendingCheck = false
+
+local Minions = {
+    ["King"] = {
+        "Pawn",
+        "Rook",
+        "Knight",
+        "Bishop",
+        "Queen"
+    },
+
+    ["TR0W3L=US3R;CYBORG"] = {
+        "R1G",
+        "R1G+",
+        "M4N4G3R"
+    },
+
+    ["Narrator"] = {
+        "NarratorMinion"
+    },
+
+    ["Supa Speedster"] = {
+        "Supaspeedling"
+    },
+
+    ["CENSORED"] = {
+        "CENSORED Minions"
+    },
+
+    ["Uncertified"] = {
+        "Combat Soldier",
+        "Combat Dummy"
+    }
+}
+
+local SpecialUnits = {
+    ["The Wee Witch's Friend"] = true
+}
+
+local function normalizeName(name)
+    name = string.lower(name)
+    name = name:gsub("%s*%b()$", "")
+    name = name:gsub("%s+$", "")
+    return name
+end
+
+local function removeESP(unit)
+    local data = ESPData[unit]
+
+    if not data then
+        return
+    end
+
+    if data.Highlight then
+        data.Highlight:Destroy()
+    end
+
+    if data.Billboard then
+        data.Billboard:Destroy()
+    end
+
+    ESPData[unit] = nil
+end
+
+local function createESP(unit, name, isRoot)
+    if not ESPEnabled then
+        return
+    end
+
+    if not unit or not unit.Parent then
+        return
+    end
+
+    if ESPData[unit] then
+        return
+    end
+
+    local highlight = Instance.new("Highlight")
+    highlight.Name = "BreachESP"
+    highlight.Adornee = unit
+    highlight.FillColor = isRoot
+        and Color3.fromRGB(255, 50, 50)
+        or Color3.fromRGB(255, 190, 50)
+    highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+    highlight.FillTransparency = 0.5
+    highlight.OutlineTransparency = 0
+    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    highlight.Parent = unit
+
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "BreachESPText"
+    billboard.Adornee = unit
+    billboard.Size = UDim2.fromOffset(220, 45)
+    billboard.StudsOffset = Vector3.new(0, 4, 0)
+    billboard.AlwaysOnTop = true
+    billboard.MaxDistance = math.huge
+    billboard.Parent = unit
+
+    local text = Instance.new("TextLabel")
+    text.Name = "Text"
+    text.BackgroundTransparency = 1
+    text.Size = UDim2.fromScale(1, 1)
+    text.Text = isRoot and name .. "\n[BREACHED]" or name
+    text.TextColor3 = isRoot
+        and Color3.fromRGB(255, 70, 70)
+        or Color3.fromRGB(255, 210, 70)
+    text.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    text.TextStrokeTransparency = 0
+    text.TextScaled = true
+    text.Font = Enum.Font.GothamBold
+    text.Parent = billboard
+
+    ESPData[unit] = {
+        Highlight = highlight,
+        Billboard = billboard,
+        Root = isRoot
+    }
+end
+
+local function findRootUnit(abnormality)
+    local targetName = normalizeName(abnormality.Name)
+
+    local exact = Units:FindFirstChild(abnormality.Name)
+
+    if exact then
+        return exact
+    end
+
+    for _, unit in ipairs(Units:GetChildren()) do
+        if unit:IsA("Model") or unit:IsA("BasePart") then
+            if normalizeName(unit.Name) == targetName then
+                return unit
+            end
+        end
+    end
+
+    return nil
+end
+
+local function findMinionUnits(minionName)
+    local result = {}
+
+    local normalized = normalizeName(minionName)
+
+    for _, unit in ipairs(Units:GetChildren()) do
+        if unit:IsA("Model") or unit:IsA("BasePart") then
+            if normalizeName(unit.Name) == normalized then
+                table.insert(result, unit)
+            end
+        end
+    end
+
+    return result
+end
+
+local function removeRootESP(abnormality)
+    for unit, data in pairs(ESPData) do
+        if data.Abnormality == abnormality then
+            removeESP(unit)
+        end
+    end
+end
+
+local function checkAbnormality(abnormality)
+    if not ESPEnabled then
+        return
+    end
+
+    if not abnormality or not abnormality.Parent then
+        return
+    end
+
+    local isBreached = abnormality:FindFirstChild("IsBreached")
+
+    if not isBreached then
+        return
+    end
+
+    if isBreached.Value ~= true then
+        removeRootESP(abnormality)
+        return
+    end
+
+    local root = findRootUnit(abnormality)
+
+    if root then
+        createESP(root, abnormality.Name, true)
+
+        if ESPData[root] then
+            ESPData[root].Abnormality = abnormality
+        end
+    end
+
+    local minionList = Minions[abnormality.Name]
+
+    if minionList then
+        for _, minionName in ipairs(minionList) do
+            for _, minion in ipairs(findMinionUnits(minionName)) do
+                createESP(minion, minion.Name, false)
+
+                if ESPData[minion] then
+                    ESPData[minion].Abnormality = abnormality
+                end
+            end
+        end
+    end
+end
+
+local function checkSpecialUnits()
+    if not ESPEnabled then
+        return
+    end
+
+    for name in pairs(SpecialUnits) do
+        local unit = Units:FindFirstChild(name)
+
+        if unit then
+            createESP(unit, name, true)
+        end
+    end
+end
+
+local function checkAll()
+    if not ESPEnabled then
+        return
+    end
+
+    if PendingCheck then
+        return
+    end
+
+    PendingCheck = true
+
+    task.delay(0.15, function()
+        PendingCheck = false
+
+        if not ESPEnabled then
+            return
+        end
+
+        for _, abnormality in ipairs(Abnormalities:GetChildren()) do
+            checkAbnormality(abnormality)
+        end
+
+        checkSpecialUnits()
+    end)
+end
+
+local function setupAbnormality(abnormality)
+    local isBreached = abnormality:FindFirstChild("IsBreached")
+
+    if isBreached and isBreached:IsA("BoolValue") then
+        isBreached:GetPropertyChangedSignal("Value"):Connect(function()
+            checkAbnormality(abnormality)
+        end)
+    end
+
+    checkAbnormality(abnormality)
+end
+
+for _, abnormality in ipairs(Abnormalities:GetChildren()) do
+    setupAbnormality(abnormality)
+end
+
+Abnormalities.ChildAdded:Connect(function(abnormality)
+    task.wait()
+    setupAbnormality(abnormality)
+    checkAll()
+end)
+
+Abnormalities.ChildRemoved:Connect(function(abnormality)
+    removeRootESP(abnormality)
+end)
+
+Units.ChildAdded:Connect(function(unit)
+    task.delay(0.2, function()
+        if ESPEnabled then
+            checkAll()
+        end
+    end)
+end)
+
+Units.ChildRemoved:Connect(function(unit)
+    removeESP(unit)
+
+    task.delay(0.2, function()
+        if ESPEnabled then
+            checkAll()
+        end
+    end)
+end)
+
+Tab:Toggle({
+    Title = "Abnormality ESP",
+    Desc = "ESP dị thể và minion",
+    Value = false,
+
+    Callback = function(value)
+        ESPEnabled = value
+
+        if value then
+            checkAll()
+        else
+            for unit in pairs(ESPData) do
+                removeESP(unit)
+            end
+        end
+    end
+})
+
+local SettingsTab = Window:Tab({
+    Title = "Theme",
+    Icon = "settings",
+    IconColor = Blue,
+    IconShape = "Square",
+    Border = true,
+    Locked = false,
+})
+
+
+--// THEME
+SettingsTab:Section({
+    Title = "Appearance",
+    TextXAlignment = "Left",
+    TextSize = 17,
+})
+
+SettingsTab:Dropdown({
+    Title = "Theme",
+    Desc = "Choose your favorite interface theme",
+    Values = {
+    "PremiumBlue",
+    "MidnightPurple",
+    "Crimson",
+    "NeonPurple",
+    "CyberGreen",
+    "IceBlue",
+    "SolarOrange",
+    "RosePink",
+    "RubyRed",
+    "Golden",
+    "Aqua",
+
+    -- New themes
+    "DeepOcean",
+    "Diamond",
+    "Emerald",
+    "RoyalBlue",
+    "ToxicOrange",
+},
+    Value = "PremiumBlue",
+    Callback = function(value)
+        local success, err = pcall(function()
+            WindUI:SetTheme(value)
+        end)
+
+        if success then
+            WindUI:Notify({
+                Title = "Theme Changed",
+                Content = "Theme: " .. tostring(value),
+                Duration = 2,
+            })
+        else
+            warn("Theme error:", err)
+        end
+    end,
+})
+
+--// DEFAULT THEME
+pcall(function()
+    WindUI:SetTheme("PremiumBlue")
+end)
