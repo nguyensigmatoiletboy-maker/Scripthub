@@ -2767,45 +2767,27 @@ local OrdealESPEnabled = false
 local Units = workspace:WaitForChild("Units")
 
 local OrdealESPData = {}
-local PendingCheck = false
 
-local KnownAbnormalities = {
-    ["Nothing There"] = true,
-    ["Mouting of Smile"] = true,
-    ["The Wee Witch's Friend"] = true,
-    ["King"] = true,
-    ["TR0W3L=US3R;CYBORG"] = true,
-    ["Narrator"] = true,
-    ["Supa Speedster"] = true,
-    ["CENSORED"] = true,
-    ["Uncertified"] = true
+local OrdealUnits = {
+    ["Process Of Understanding"] = true,
+    ["Helix of the End"] = true,
+    ["Great Love For Us"] = true,
+    ["Fruit of Understanding"] = true,
+    ["Food Chain"] = true,
+    ["Eternal Meal"] = true,
+    ["Doubt"] = true,
+    ["Cheers for the start"] = true,
+    ["Where to Reach"] = true,
+    ["Worm"] = true,
+    ["Sweeper"] = true,
+    ["Red Fixer"] = true,
+    ["White Fixer"] = true,
+    ["Black Fixer"] = true,
+    ["Pale Fixer"] = true,
+    ["The Claw"] = true
 }
 
-local KnownMinions = {
-    ["Pawn"] = true,
-    ["Rook"] = true,
-    ["Knight"] = true,
-    ["Bishop"] = true,
-    ["Queen"] = true,
-    ["R1G"] = true,
-    ["R1G+"] = true,
-    ["M4N4G3R"] = true,
-    ["NarratorMinion"] = true,
-    ["Supaspeedling"] = true,
-    ["CENSORED Minions"] = true,
-    ["Combat Soldier"] = true,
-    ["Combat Dummy"] = true,
-    ["Laetitia"] = true
-}
-
-local function normalizeName(name)
-    name = string.lower(name)
-    name = name:gsub("%s*%b()$", "")
-    name = name:gsub("%s+$", "")
-    return name
-end
-
-local function removeOrdealESP(unit)
+local function removeESP(unit)
     local data = OrdealESPData[unit]
 
     if not data then
@@ -2823,7 +2805,7 @@ local function removeOrdealESP(unit)
     OrdealESPData[unit] = nil
 end
 
-local function createOrdealESP(unit)
+local function createESP(unit)
     if not OrdealESPEnabled then
         return
     end
@@ -2895,24 +2877,6 @@ local function createOrdealESP(unit)
     }
 end
 
-local function isKnownUnit(unit)
-    local normalized = normalizeName(unit.Name)
-
-    for name in pairs(KnownAbnormalities) do
-        if normalizeName(name) == normalized then
-            return true
-        end
-    end
-
-    for name in pairs(KnownMinions) do
-        if normalizeName(name) == normalized then
-            return true
-        end
-    end
-
-    return false
-end
-
 local function checkUnit(unit)
     if not OrdealESPEnabled then
         return
@@ -2926,63 +2890,44 @@ local function checkUnit(unit)
         return
     end
 
-    if isKnownUnit(unit) then
-        removeOrdealESP(unit)
-        return
+    if OrdealUnits[unit.Name] then
+        createESP(unit)
+    else
+        removeESP(unit)
     end
-
-    createOrdealESP(unit)
 end
 
-local function checkAllUnits()
-    if not OrdealESPEnabled then
-        return
-    end
-
-    if PendingCheck then
-        return
-    end
-
-    PendingCheck = true
-
-    task.delay(0.2, function()
-        PendingCheck = false
-
-        if not OrdealESPEnabled then
-            return
-        end
-
-        for _, unit in ipairs(Units:GetChildren()) do
-            checkUnit(unit)
-        end
-    end)
+for _, unit in ipairs(Units:GetChildren()) do
+    checkUnit(unit)
 end
 
 Units.ChildAdded:Connect(function(unit)
-    task.delay(0.15, function()
-        if OrdealESPEnabled then
-            checkUnit(unit)
-        end
-    end)
+    task.wait(0.1)
+
+    if OrdealESPEnabled then
+        checkUnit(unit)
+    end
 end)
 
 Units.ChildRemoved:Connect(function(unit)
-    removeOrdealESP(unit)
+    removeESP(unit)
 end)
 
 Tab:Toggle({
     Title = "Ordeal Event ESP",
-    Desc = "ESP dị thể Ordeal/Event",
+    Desc = "ESP các dị thể trong Ordeal",
     Value = false,
 
     Callback = function(value)
         OrdealESPEnabled = value
 
         if value then
-            checkAllUnits()
+            for _, unit in ipairs(Units:GetChildren()) do
+                checkUnit(unit)
+            end
         else
             for unit in pairs(OrdealESPData) do
-                removeOrdealESP(unit)
+                removeESP(unit)
             end
         end
     end
@@ -2991,6 +2936,10 @@ Tab:Toggle({
 local LightingTab = Window:Tab({
     Title = "Lighting",
     Icon = "sun",
+    IconColor = Black,
+    IconShape = "Square",
+    Border = true,
+    Locked = false,
 })
 
 local Lighting = game:GetService("Lighting")
