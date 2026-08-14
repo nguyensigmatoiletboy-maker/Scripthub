@@ -2415,13 +2415,19 @@ Tab:Section({
     TextSize = 17,
 })
 
-local ESPEnabled = false
+local AbnormalityESPEnabled = false
+local OrdealESPEnabled = false
 
 local Abnormalities = workspace:WaitForChild("Abnormalities")
 local Units = workspace:WaitForChild("Units")
 
 local ESPData = {}
-local PendingCheck = false
+local UnitCache = {}
+local AbnormalityCache = {}
+
+local Scheduled = false
+local RescanRequested = false
+local Processing = false
 
 local Minions = {
     ["King"] = {
@@ -2460,11 +2466,57 @@ local SpecialUnits = {
     ["The Wee Witch's Friend"] = true
 }
 
+local OrdealUnits = {
+    ["Process Of Understanding"] = true,
+    ["Helix of the End"] = true,
+    ["Great Love For Us"] = true,
+    ["Fruit of Understanding"] = true,
+    ["Food Chain"] = true,
+    ["Eternal Meal"] = true,
+    ["Doubt"] = true,
+    ["Cheers for the start"] = true,
+    ["Where to Reach"] = true,
+    ["Worm"] = true,
+    ["Sweeper"] = true,
+    ["Red Fixer"] = true,
+    ["White Fixer"] = true,
+    ["Black Fixer"] = true,
+    ["Pale Fixer"] = true,
+    ["The Claw"] = true
+}
+
 local function normalizeName(name)
-    name = string.lower(name)
-    name = name:gsub("%s*%b()$", "")
-    name = name:gsub("%s+$", "")
-    return name
+    local cached = UnitCache[name]
+
+    if cached then
+        return cached
+    end
+
+    local result = string.lower(name)
+    result = result:gsub("%s*%b()$", "")
+    result = result:gsub("%s+$", "")
+
+    UnitCache[name] = result
+
+    return result
+end
+
+local MinionLookup = {}
+local OrdealLookup = {}
+local SpecialLookup = {}
+
+for root, list in pairs(Minions) do
+    for _, name in ipairs(list) do
+        MinionLookup[normalizeName(name)] = true
+    end
+end
+
+for name in pairs(OrdealUnits) do
+    OrdealLookup[normalizeName(name)] = true
+end
+
+for name in pairs(SpecialUnits) do
+    SpecialLookup[normalizeName(name)] = name
 end
 
 local function removeESP(unit)
@@ -2485,35 +2537,55 @@ local function removeESP(unit)
     ESPData[unit] = nil
 end
 
-local function createESP(unit, name, isRoot)
-    if not ESPEnabled then
-        return
-    end
-
+local function createESP(unit, name, espType, isRoot)
     if not unit or not unit.Parent then
         return
     end
 
-    if ESPData[unit] then
+    local old = ESPData[unit]
+
+    if old and old.Type == espType and old.Name == name and old.Root == isRoot then
         return
     end
 
+    if old then
+        removeESP(unit)
+    end
+
+    local fillColor
+    local outlineColor
+    local textColor
+    local backgroundColor
+
+    if espType == "Abnormality" then
+        fillColor = Color3.fromRGB(255, 55, 75)
+        outlineColor = Color3.fromRGB(255, 150, 160)
+        textColor = Color3.fromRGB(255, 100, 115)
+        backgroundColor = Color3.fromRGB(20, 8, 12)
+    elseif espType == "Minion" then
+        fillColor = Color3.fromRGB(65, 155, 255)
+        outlineColor = Color3.fromRGB(150, 215, 255)
+        textColor = Color3.fromRGB(105, 195, 255)
+        backgroundColor = Color3.fromRGB(7, 14, 24)
+    else
+        fillColor = Color3.fromRGB(175, 80, 255)
+        outlineColor = Color3.fromRGB(220, 170, 255)
+        textColor = Color3.fromRGB(210, 145, 255)
+        backgroundColor = Color3.fromRGB(18, 8, 28)
+    end
+
     local highlight = Instance.new("Highlight")
-    highlight.Name = "BreachESP"
+    highlight.Name = "ESP_Highlight"
     highlight.Adornee = unit
-    highlight.FillColor = isRoot
-        and Color3.fromRGB(255, 55, 75)
-        or Color3.fromRGB(80, 170, 255)
-    highlight.OutlineColor = isRoot
-        and Color3.fromRGB(255, 150, 160)
-        or Color3.fromRGB(160, 220, 255)
-    highlight.FillTransparency = isRoot and 0.65 or 0.75
+    highlight.FillColor = fillColor
+    highlight.OutlineColor = outlineColor
+    highlight.FillTransparency = espType == "Ordeal" and 0.72 or 0.65
     highlight.OutlineTransparency = 0.05
     highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
     highlight.Parent = unit
 
     local billboard = Instance.new("BillboardGui")
-    billboard.Name = "BreachESPText"
+    billboard.Name = "ESP_Text"
     billboard.Adornee = unit
     billboard.Size = UDim2.fromOffset(170, 32)
     billboard.StudsOffset = Vector3.new(0, 3.5, 0)
@@ -2525,322 +2597,7 @@ local function createESP(unit, name, isRoot)
     local background = Instance.new("Frame")
     background.Name = "Background"
     background.Size = UDim2.fromScale(1, 1)
-    background.BackgroundColor3 = isRoot
-        and Color3.fromRGB(20, 8, 12)
-        or Color3.fromRGB(7, 14, 24)
-    background.BackgroundTransparency = 0.15
-    background.BorderSizePixel = 0
-    background.Parent = billboard
-
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
-    corner.Parent = background
-
-    local stroke = Instance.new("UIStroke")
-    stroke.Thickness = 1
-    stroke.Transparency = 0.15
-    stroke.Color = isRoot
-        and Color3.fromRGB(255, 70, 90)
-        or Color3.fromRGB(70, 170, 255)
-    stroke.Parent = background
-
-    local padding = Instance.new("UIPadding")
-    padding.PaddingLeft = UDim.new(0, 7)
-    padding.PaddingRight = UDim.new(0, 7)
-    padding.PaddingTop = UDim.new(0, 3)
-    padding.PaddingBottom = UDim.new(0, 3)
-    padding.Parent = background
-
-    local text = Instance.new("TextLabel")
-    text.Name = "Text"
-    text.BackgroundTransparency = 1
-    text.Size = UDim2.fromScale(1, 1)
-    text.Text = isRoot and name .. "  •  BREACHED" or name
-    text.TextColor3 = isRoot
-        and Color3.fromRGB(255, 100, 115)
-        or Color3.fromRGB(105, 195, 255)
-    text.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-    text.TextStrokeTransparency = 0.25
-    text.TextScaled = true
-    text.Font = Enum.Font.GothamSemibold
-    text.Parent = background
-
-    ESPData[unit] = {
-        Highlight = highlight,
-        Billboard = billboard,
-        Root = isRoot
-    }
-end
-
-local function findRootUnit(abnormality)
-    local targetName = normalizeName(abnormality.Name)
-
-    local exact = Units:FindFirstChild(abnormality.Name)
-
-    if exact then
-        return exact
-    end
-
-    for _, unit in ipairs(Units:GetChildren()) do
-        if unit:IsA("Model") or unit:IsA("BasePart") then
-            if normalizeName(unit.Name) == targetName then
-                return unit
-            end
-        end
-    end
-
-    return nil
-end
-
-local function findMinionUnits(minionName)
-    local result = {}
-    local normalized = normalizeName(minionName)
-
-    for _, unit in ipairs(Units:GetChildren()) do
-        if unit:IsA("Model") or unit:IsA("BasePart") then
-            if normalizeName(unit.Name) == normalized then
-                table.insert(result, unit)
-            end
-        end
-    end
-
-    return result
-end
-
-local function removeRootESP(abnormality)
-    for unit, data in pairs(ESPData) do
-        if data.Abnormality == abnormality then
-            removeESP(unit)
-        end
-    end
-end
-
-local function checkAbnormality(abnormality)
-    if not ESPEnabled then
-        return
-    end
-
-    if not abnormality or not abnormality.Parent then
-        return
-    end
-
-    local isBreached = abnormality:FindFirstChild("IsBreached")
-
-    if not isBreached then
-        return
-    end
-
-    if isBreached.Value ~= true then
-        removeRootESP(abnormality)
-        return
-    end
-
-    local root = findRootUnit(abnormality)
-
-    if root then
-        createESP(root, abnormality.Name, true)
-
-        if ESPData[root] then
-            ESPData[root].Abnormality = abnormality
-        end
-    end
-
-    local minionList = Minions[abnormality.Name]
-
-    if minionList then
-        for _, minionName in ipairs(minionList) do
-            for _, minion in ipairs(findMinionUnits(minionName)) do
-                createESP(minion, minion.Name, false)
-
-                if ESPData[minion] then
-                    ESPData[minion].Abnormality = abnormality
-                end
-            end
-        end
-    end
-end
-
-local function checkSpecialUnits()
-    if not ESPEnabled then
-        return
-    end
-
-    for name in pairs(SpecialUnits) do
-        local unit = Units:FindFirstChild(name)
-
-        if unit then
-            createESP(unit, name, true)
-        end
-    end
-end
-
-local function checkAll()
-    if not ESPEnabled then
-        return
-    end
-
-    if PendingCheck then
-        return
-    end
-
-    PendingCheck = true
-
-    task.delay(0.15, function()
-        PendingCheck = false
-
-        if not ESPEnabled then
-            return
-        end
-
-        for _, abnormality in ipairs(Abnormalities:GetChildren()) do
-            checkAbnormality(abnormality)
-        end
-
-        checkSpecialUnits()
-    end)
-end
-
-local function setupAbnormality(abnormality)
-    local isBreached = abnormality:FindFirstChild("IsBreached")
-
-    if isBreached and isBreached:IsA("BoolValue") then
-        isBreached:GetPropertyChangedSignal("Value"):Connect(function()
-            checkAbnormality(abnormality)
-        end)
-    end
-
-    checkAbnormality(abnormality)
-end
-
-for _, abnormality in ipairs(Abnormalities:GetChildren()) do
-    setupAbnormality(abnormality)
-end
-
-Abnormalities.ChildAdded:Connect(function(abnormality)
-    task.wait()
-    setupAbnormality(abnormality)
-    checkAll()
-end)
-
-Abnormalities.ChildRemoved:Connect(function(abnormality)
-    removeRootESP(abnormality)
-end)
-
-Units.ChildAdded:Connect(function()
-    task.delay(0.2, function()
-        if ESPEnabled then
-            checkAll()
-        end
-    end)
-end)
-
-Units.ChildRemoved:Connect(function(unit)
-    removeESP(unit)
-
-    task.delay(0.2, function()
-        if ESPEnabled then
-            checkAll()
-        end
-    end)
-end)
-
-Tab:Toggle({
-    Title = "Abnormality ESP",
-    Desc = "ESP dị thể và minion",
-    Value = false,
-
-    Callback = function(value)
-        ESPEnabled = value
-
-        if value then
-            checkAll()
-        else
-            for unit in pairs(ESPData) do
-                removeESP(unit)
-            end
-        end
-    end
-})
-
-local OrdealESPEnabled = false
-
-local Units = workspace:WaitForChild("Units")
-
-local OrdealESPData = {}
-
-local OrdealUnits = {
-    ["Process Of Understanding"] = true,
-    ["Helix of the End"] = true,
-    ["Great Love For Us"] = true,
-    ["Fruit of Understanding"] = true,
-    ["Food Chain"] = true,
-    ["Eternal Meal"] = true,
-    ["Doubt"] = true,
-    ["Cheers for the start"] = true,
-    ["Where to Reach"] = true,
-    ["Worm"] = true,
-    ["Sweeper"] = true,
-    ["Red Fixer"] = true,
-    ["White Fixer"] = true,
-    ["Black Fixer"] = true,
-    ["Pale Fixer"] = true,
-    ["The Claw"] = true
-}
-
-local function removeESP(unit)
-    local data = OrdealESPData[unit]
-
-    if not data then
-        return
-    end
-
-    if data.Highlight then
-        data.Highlight:Destroy()
-    end
-
-    if data.Billboard then
-        data.Billboard:Destroy()
-    end
-
-    OrdealESPData[unit] = nil
-end
-
-local function createESP(unit)
-    if not OrdealESPEnabled then
-        return
-    end
-
-    if not unit or not unit.Parent then
-        return
-    end
-
-    if OrdealESPData[unit] then
-        return
-    end
-
-    local highlight = Instance.new("Highlight")
-    highlight.Name = "OrdealESP"
-    highlight.Adornee = unit
-    highlight.FillColor = Color3.fromRGB(175, 80, 255)
-    highlight.OutlineColor = Color3.fromRGB(220, 170, 255)
-    highlight.FillTransparency = 0.7
-    highlight.OutlineTransparency = 0.05
-    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-    highlight.Parent = unit
-
-    local billboard = Instance.new("BillboardGui")
-    billboard.Name = "OrdealESPText"
-    billboard.Adornee = unit
-    billboard.Size = UDim2.fromOffset(170, 32)
-    billboard.StudsOffset = Vector3.new(0, 3.5, 0)
-    billboard.AlwaysOnTop = true
-    billboard.MaxDistance = math.huge
-    billboard.LightInfluence = 0
-    billboard.Parent = unit
-
-    local background = Instance.new("Frame")
-    background.Size = UDim2.fromScale(1, 1)
-    background.BackgroundColor3 = Color3.fromRGB(18, 8, 28)
+    background.BackgroundColor3 = backgroundColor
     background.BackgroundTransparency = 0.15
     background.BorderSizePixel = 0
     background.Parent = billboard
@@ -2852,7 +2609,7 @@ local function createESP(unit)
     local stroke = Instance.new("UIStroke")
     stroke.Thickness = 1
     stroke.Transparency = 0.1
-    stroke.Color = Color3.fromRGB(190, 100, 255)
+    stroke.Color = outlineColor
     stroke.Parent = background
 
     local padding = Instance.new("UIPadding")
@@ -2861,27 +2618,27 @@ local function createESP(unit)
     padding.Parent = background
 
     local text = Instance.new("TextLabel")
+    text.Name = "Text"
     text.BackgroundTransparency = 1
     text.Size = UDim2.fromScale(1, 1)
-    text.Text = unit.Name
-    text.TextColor3 = Color3.fromRGB(210, 145, 255)
+    text.Text = isRoot and name .. "  •  BREACHED" or name
+    text.TextColor3 = textColor
     text.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
     text.TextStrokeTransparency = 0.2
     text.TextScaled = true
     text.Font = Enum.Font.GothamSemibold
     text.Parent = background
 
-    OrdealESPData[unit] = {
+    ESPData[unit] = {
         Highlight = highlight,
-        Billboard = billboard
+        Billboard = billboard,
+        Name = name,
+        Type = espType,
+        Root = isRoot
     }
 end
 
-local function checkUnit(unit)
-    if not OrdealESPEnabled then
-        return
-    end
-
+local function cacheUnit(unit)
     if not unit or not unit.Parent then
         return
     end
@@ -2890,43 +2647,357 @@ local function checkUnit(unit)
         return
     end
 
-    if OrdealUnits[unit.Name] then
-        createESP(unit)
-    else
-        removeESP(unit)
+    local normalized = normalizeName(unit.Name)
+
+    if not UnitCache[unit] then
+        UnitCache[unit] = normalized
+    end
+
+    if not UnitCache[normalized] then
+        UnitCache[normalized] = {}
+    end
+
+    UnitCache[normalized][unit] = true
+end
+
+local function uncacheUnit(unit)
+    local normalized = UnitCache[unit]
+
+    if type(normalized) ~= "string" then
+        return
+    end
+
+    local list = UnitCache[normalized]
+
+    if type(list) == "table" then
+        list[unit] = nil
+    end
+
+    UnitCache[unit] = nil
+end
+
+local function getUnitsByName(name)
+    local normalized = normalizeName(name)
+    local list = UnitCache[normalized]
+
+    if type(list) ~= "table" then
+        return nil
+    end
+
+    return list
+end
+
+local function processUnit(unit)
+    if not unit or not unit.Parent then
+        return
+    end
+
+    if not unit:IsA("Model") and not unit:IsA("BasePart") then
+        return
+    end
+
+    cacheUnit(unit)
+
+    local normalized = normalizeName(unit.Name)
+
+    if OrdealESPEnabled and OrdealLookup[normalized] then
+        createESP(unit, unit.Name, "Ordeal", false)
+        return
+    end
+
+    if not AbnormalityESPEnabled then
+        return
+    end
+
+    if SpecialLookup[normalized] then
+        createESP(unit, SpecialLookup[normalized], "Abnormality", true)
+        return
+    end
+
+    if MinionLookup[normalized] then
+        return
+    end
+
+    for _, abnormality in ipairs(Abnormalities:GetChildren()) do
+        local breached = abnormality:FindFirstChild("IsBreached")
+
+        if breached and breached:IsA("BoolValue") and breached.Value then
+            if normalizeName(abnormality.Name) == normalized then
+                createESP(unit, abnormality.Name, "Abnormality", true)
+                return
+            end
+        end
     end
 end
 
-for _, unit in ipairs(Units:GetChildren()) do
-    checkUnit(unit)
+local function processMinionsForAbnormality(abnormality)
+    if not AbnormalityESPEnabled then
+        return
+    end
+
+    local breached = abnormality:FindFirstChild("IsBreached")
+
+    if not breached or not breached:IsA("BoolValue") or not breached.Value then
+        return
+    end
+
+    local minions = Minions[abnormality.Name]
+
+    if not minions then
+        return
+    end
+
+    for _, minionName in ipairs(minions) do
+        local list = getUnitsByName(minionName)
+
+        if list then
+            for unit in pairs(list) do
+                if unit and unit.Parent then
+                    createESP(unit, unit.Name, "Minion", false)
+                end
+            end
+        end
+    end
 end
 
-Units.ChildAdded:Connect(function(unit)
-    task.wait(0.1)
+local function processAbnormality(abnormality)
+    if not abnormality or not abnormality.Parent then
+        return
+    end
 
-    if OrdealESPEnabled then
-        checkUnit(unit)
+    local breached = abnormality:FindFirstChild("IsBreached")
+
+    if not breached or not breached:IsA("BoolValue") then
+        return
+    end
+
+    if not breached.Value then
+        for unit, data in pairs(ESPData) do
+            if data.Abnormality == abnormality then
+                removeESP(unit)
+            end
+        end
+
+        return
+    end
+
+    if not AbnormalityESPEnabled then
+        return
+    end
+
+    local list = getUnitsByName(abnormality.Name)
+
+    if list then
+        for unit in pairs(list) do
+            if unit and unit.Parent then
+                createESP(unit, abnormality.Name, "Abnormality", true)
+
+                if ESPData[unit] then
+                    ESPData[unit].Abnormality = abnormality
+                end
+            end
+        end
+    end
+
+    processMinionsForAbnormality(abnormality)
+end
+
+local function fullRebuild()
+    if Processing then
+        RescanRequested = true
+        return
+    end
+
+    Processing = true
+    RescanRequested = false
+
+    local ok = pcall(function()
+        if not AbnormalityESPEnabled and not OrdealESPEnabled then
+            for unit in pairs(ESPData) do
+                removeESP(unit)
+            end
+            return
+        end
+
+        UnitCache = {}
+
+        local children = Units:GetChildren()
+
+        for i = 1, #children do
+            local unit = children[i]
+
+            if unit and unit.Parent then
+                cacheUnit(unit)
+            end
+
+            if i % 40 == 0 then
+                task.wait()
+            end
+        end
+
+        for i = 1, #children do
+            local unit = children[i]
+
+            if unit and unit.Parent then
+                processUnit(unit)
+            end
+
+            if i % 40 == 0 then
+                task.wait()
+            end
+        end
+
+        if AbnormalityESPEnabled then
+            local abnormalities = Abnormalities:GetChildren()
+
+            for i = 1, #abnormalities do
+                processAbnormality(abnormalities[i])
+
+                if i % 10 == 0 then
+                    task.wait()
+                end
+            end
+        end
+    end)
+
+    Processing = false
+
+    if not ok then
+        for unit in pairs(ESPData) do
+            if not unit.Parent then
+                removeESP(unit)
+            end
+        end
+    end
+
+    if RescanRequested then
+        RescanRequested = false
+        scheduleRebuild()
+    end
+end
+
+function scheduleRebuild()
+    if Scheduled then
+        RescanRequested = true
+        return
+    end
+
+    Scheduled = true
+
+    task.delay(0.35, function()
+        Scheduled = false
+
+        if AbnormalityESPEnabled or OrdealESPEnabled then
+            fullRebuild()
+        end
+    end)
+end
+
+local function onUnitAdded(unit)
+    if not AbnormalityESPEnabled and not OrdealESPEnabled then
+        return
+    end
+
+    task.defer(function()
+        if unit and unit.Parent then
+            cacheUnit(unit)
+            processUnit(unit)
+
+            if AbnormalityESPEnabled then
+                for _, abnormality in ipairs(Abnormalities:GetChildren()) do
+                    processAbnormality(abnormality)
+                end
+            end
+        end
+    end)
+end
+
+local function onUnitRemoved(unit)
+    removeESP(unit)
+    uncacheUnit(unit)
+end
+
+local function setupAbnormality(abnormality)
+    if AbnormalityCache[abnormality] then
+        return
+    end
+
+    AbnormalityCache[abnormality] = true
+
+    local breached = abnormality:FindFirstChild("IsBreached")
+
+    if breached and breached:IsA("BoolValue") then
+        breached:GetPropertyChangedSignal("Value"):Connect(function()
+            processAbnormality(abnormality)
+        end)
+    end
+
+    abnormality.ChildAdded:Connect(function(child)
+        if child.Name == "IsBreached" and child:IsA("BoolValue") then
+            child:GetPropertyChangedSignal("Value"):Connect(function()
+                processAbnormality(abnormality)
+            end)
+
+            processAbnormality(abnormality)
+        end
+    end)
+end
+
+for _, abnormality in ipairs(Abnormalities:GetChildren()) do
+    setupAbnormality(abnormality)
+end
+
+Units.ChildAdded:Connect(onUnitAdded)
+Units.ChildRemoved:Connect(onUnitRemoved)
+
+Abnormalities.ChildAdded:Connect(function(abnormality)
+    setupAbnormality(abnormality)
+
+    if AbnormalityESPEnabled then
+        scheduleRebuild()
     end
 end)
 
-Units.ChildRemoved:Connect(function(unit)
-    removeESP(unit)
+Abnormalities.ChildRemoved:Connect(function(abnormality)
+    AbnormalityCache[abnormality] = nil
+
+    for unit, data in pairs(ESPData) do
+        if data.Abnormality == abnormality then
+            removeESP(unit)
+        end
+    end
 end)
 
 Tab:Toggle({
+    Title = "Abnormality ESP",
+    Desc = "ESP dị thể và minion",
+    Value = false,
+
+    Callback = function(value)
+        AbnormalityESPEnabled = value
+
+        if value then
+            scheduleRebuild()
+        elseif not OrdealESPEnabled then
+            for unit in pairs(ESPData) do
+                removeESP(unit)
+            end
+        end
+    end
+})
+
+Tab:Toggle({
     Title = "Ordeal Event ESP",
-    Desc = "ESP các dị thể trong Ordeal",
+    Desc = "ESP dị thể trong Ordeal",
     Value = false,
 
     Callback = function(value)
         OrdealESPEnabled = value
 
         if value then
-            for _, unit in ipairs(Units:GetChildren()) do
-                checkUnit(unit)
-            end
-        else
-            for unit in pairs(OrdealESPData) do
+            scheduleRebuild()
+        elseif not AbnormalityESPEnabled then
+            for unit in pairs(ESPData) do
                 removeESP(unit)
             end
         end
@@ -2948,45 +3019,154 @@ local AntiDark = false
 local FullBright = false
 local BrightnessValue = 5
 
-local OriginalLighting = {
-    Brightness = Lighting.Brightness,
-    ClockTime = Lighting.ClockTime,
-    GlobalShadows = Lighting.GlobalShadows,
-    ExposureCompensation = Lighting.ExposureCompensation,
-    Ambient = Lighting.Ambient,
-    OutdoorAmbient = Lighting.OutdoorAmbient,
-    ColorShift_Top = Lighting.ColorShift_Top,
-    ColorShift_Bottom = Lighting.ColorShift_Bottom,
-}
+local SavedLighting = nil
+local SavedEffects = {}
 
-local OriginalEffects = {}
+local function SaveLighting()
+    SavedLighting = {
+        Brightness = Lighting.Brightness,
+        ClockTime = Lighting.ClockTime,
+        GlobalShadows = Lighting.GlobalShadows,
+        ExposureCompensation = Lighting.ExposureCompensation,
+        Ambient = Lighting.Ambient,
+        OutdoorAmbient = Lighting.OutdoorAmbient,
+        ColorShift_Top = Lighting.ColorShift_Top,
+        ColorShift_Bottom = Lighting.ColorShift_Bottom,
+    }
 
-for _, obj in ipairs(Lighting:GetChildren()) do
-    if obj:IsA("Atmosphere")
-    or obj:IsA("BloomEffect")
-    or obj:IsA("ColorCorrectionEffect")
-    or obj:IsA("SunRaysEffect")
-    or obj:IsA("DepthOfFieldEffect") then
-        OriginalEffects[obj] = obj.Enabled
+    SavedEffects = {}
+
+    for _, obj in ipairs(Lighting:GetChildren()) do
+        if obj:IsA("Atmosphere")
+        or obj:IsA("BloomEffect")
+        or obj:IsA("ColorCorrectionEffect")
+        or obj:IsA("SunRaysEffect")
+        or obj:IsA("DepthOfFieldEffect") then
+            SavedEffects[obj] = obj.Enabled
+        end
     end
 end
 
-local function ApplyAntiDark()
-    if not AntiDark then
+local function RestoreLighting()
+    if not SavedLighting then
         return
     end
 
-    Lighting.GlobalShadows = false
-    Lighting.Ambient = Color3.fromRGB(255, 255, 255)
-    Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
-    Lighting.ColorShift_Top = Color3.fromRGB(255, 255, 255)
-    Lighting.ColorShift_Bottom = Color3.fromRGB(255, 255, 255)
-    Lighting.ExposureCompensation = math.max(
-        Lighting.ExposureCompensation,
-        1
-    )
+    Lighting.Brightness = SavedLighting.Brightness
+    Lighting.ClockTime = SavedLighting.ClockTime
+    Lighting.GlobalShadows = SavedLighting.GlobalShadows
+    Lighting.ExposureCompensation = SavedLighting.ExposureCompensation
+    Lighting.Ambient = SavedLighting.Ambient
+    Lighting.OutdoorAmbient = SavedLighting.OutdoorAmbient
+    Lighting.ColorShift_Top = SavedLighting.ColorShift_Top
+    Lighting.ColorShift_Bottom = SavedLighting.ColorShift_Bottom
 
-    for _, obj in ipairs(Lighting:GetChildren()) do
+    for obj, enabled in pairs(SavedEffects) do
+        if obj and obj.Parent then
+            obj.Enabled = enabled
+        end
+    end
+
+    SavedLighting = nil
+    SavedEffects = {}
+end
+
+local function ApplyLighting()
+    if not AntiDark and not FullBright then
+        return
+    end
+
+    if AntiDark then
+        Lighting.GlobalShadows = false
+        Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+        Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+        Lighting.ColorShift_Top = Color3.fromRGB(255, 255, 255)
+        Lighting.ColorShift_Bottom = Color3.fromRGB(255, 255, 255)
+
+        for _, obj in ipairs(Lighting:GetChildren()) do
+            if obj:IsA("Atmosphere")
+            or obj:IsA("BloomEffect")
+            or obj:IsA("ColorCorrectionEffect")
+            or obj:IsA("SunRaysEffect")
+            or obj:IsA("DepthOfFieldEffect") then
+                obj.Enabled = false
+            end
+        end
+    end
+
+    if FullBright then
+        Lighting.Brightness = BrightnessValue
+        Lighting.ExposureCompensation = BrightnessValue / 2
+        Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+        Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+        Lighting.ColorShift_Top = Color3.fromRGB(255, 255, 255)
+        Lighting.ColorShift_Bottom = Color3.fromRGB(255, 255, 255)
+        Lighting.GlobalShadows = false
+    end
+end
+
+local function UpdateState()
+    if AntiDark or FullBright then
+        if not SavedLighting then
+            SaveLighting()
+        end
+
+        ApplyLighting()
+    else
+        RestoreLighting()
+    end
+end
+
+LightingTab:Toggle({
+    Title = "Anti Dark",
+    Desc = "Tắt vùng tối, shadow và hiệu ứng tối",
+    Value = false,
+
+    Callback = function(Value)
+        AntiDark = Value
+        UpdateState()
+    end
+})
+
+LightingTab:Toggle({
+    Title = "Full Bright",
+    Desc = "Tăng độ sáng môi trường",
+    Value = false,
+
+    Callback = function(Value)
+        FullBright = Value
+        UpdateState()
+    end
+})
+
+LightingTab:Slider({
+    Title = "Brightness",
+    Desc = "Chỉnh độ sáng Full Bright",
+    Step = 0.1,
+
+    Value = {
+        Min = 0,
+        Max = 10,
+        Default = 5,
+    },
+
+    Callback = function(Value)
+        BrightnessValue = Value
+
+        if FullBright then
+            ApplyLighting()
+        end
+    end
+})
+
+Lighting.ChildAdded:Connect(function(obj)
+    if not AntiDark and not FullBright then
+        return
+    end
+
+    task.wait()
+
+    if AntiDark then
         if obj:IsA("Atmosphere")
         or obj:IsA("BloomEffect")
         or obj:IsA("ColorCorrectionEffect")
@@ -2995,134 +3175,8 @@ local function ApplyAntiDark()
             obj.Enabled = false
         end
     end
-end
 
-local function ApplyFullBright()
-    if not FullBright then
-        return
-    end
-
-    Lighting.Brightness = BrightnessValue
-    Lighting.ExposureCompensation = BrightnessValue / 2
-    Lighting.Ambient = Color3.fromRGB(255, 255, 255)
-    Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
-    Lighting.ColorShift_Top = Color3.fromRGB(255, 255, 255)
-    Lighting.ColorShift_Bottom = Color3.fromRGB(255, 255, 255)
-    Lighting.GlobalShadows = false
-end
-
-local function RestoreLighting()
-    if AntiDark or FullBright then
-        if AntiDark then
-            ApplyAntiDark()
-        end
-
-        if FullBright then
-            ApplyFullBright()
-        end
-
-        return
-    end
-
-    Lighting.Brightness = OriginalLighting.Brightness
-    Lighting.ClockTime = OriginalLighting.ClockTime
-    Lighting.GlobalShadows = OriginalLighting.GlobalShadows
-    Lighting.ExposureCompensation = OriginalLighting.ExposureCompensation
-    Lighting.Ambient = OriginalLighting.Ambient
-    Lighting.OutdoorAmbient = OriginalLighting.OutdoorAmbient
-    Lighting.ColorShift_Top = OriginalLighting.ColorShift_Top
-    Lighting.ColorShift_Bottom = OriginalLighting.ColorShift_Bottom
-
-    for obj, enabled in pairs(OriginalEffects) do
-        if obj and obj.Parent then
-            obj.Enabled = enabled
-        end
-    end
-end
-
-LightingTab:Toggle({
-    Title = "Anti Dark",
-    Desc = "Tắt bóng tối, shadow và hiệu ứng làm tối",
-    Value = false,
-    Callback = function(Value)
-        AntiDark = Value
-
-        if Value then
-            ApplyAntiDark()
-        else
-            RestoreLighting()
-        end
-    end
-})
-
-LightingTab:Toggle({
-    Title = "Full Bright",
-    Desc = "Tăng độ sáng toàn bộ môi trường",
-    Value = false,
-    Callback = function(Value)
-        FullBright = Value
-
-        if Value then
-            ApplyFullBright()
-        else
-            RestoreLighting()
-        end
-    end
-})
-
-LightingTab:Slider({
-    Title = "Brightness",
-    Desc = "Điều chỉnh độ sáng của Full Bright",
-    Step = 0.1,
-    Value = {
-        Min = 0,
-        Max = 10,
-        Default = 5,
-    },
-    Callback = function(Value)
-        BrightnessValue = Value
-
-        if FullBright then
-            ApplyFullBright()
-        end
-    end
-})
-
-Lighting.ChildAdded:Connect(function(obj)
-    if obj:IsA("Atmosphere")
-    or obj:IsA("BloomEffect")
-    or obj:IsA("ColorCorrectionEffect")
-    or obj:IsA("SunRaysEffect")
-    or obj:IsA("DepthOfFieldEffect") then
-
-        OriginalEffects[obj] = obj.Enabled
-
-        task.wait()
-
-        if AntiDark then
-            obj.Enabled = false
-        end
-    end
-
-    if AntiDark then
-        task.defer(ApplyAntiDark)
-    end
-
-    if FullBright then
-        task.defer(ApplyFullBright)
-    end
-end)
-
-task.spawn(function()
-    while task.wait(0.5) do
-        if AntiDark then
-            ApplyAntiDark()
-        end
-
-        if FullBright then
-            ApplyFullBright()
-        end
-    end
+    ApplyLighting()
 end)
 
 local SettingsTab = Window:Tab({
