@@ -338,6 +338,18 @@ UICornerBtnHide.CornerRadius = UDim.new(1, 0)
 
 Library.ToggleUI = function()
 	getgenv().UIToggled = not getgenv().UIToggled
+	if getgenv().UIToggled and game.CoreGui:FindFirstChild("Nousigi Hub GUI") then
+		game.CoreGui["Nousigi Hub GUI"].Enabled = true
+	end
+	if getgenv().UIToggled and Main and Main.Parent then
+		local targetSize = Main.Size
+		local targetPosition = Main.Position
+		local targetTransparency = Main.BackgroundTransparency
+		Main.Size = UDim2.new(targetSize.X.Scale, targetSize.X.Offset * 0.88, targetSize.Y.Scale, targetSize.Y.Offset * 0.88)
+		Main.Position = targetPosition + UDim2.new(0, 0, 0, 12)
+		Main.BackgroundTransparency = 1
+		TweenService:Create(Main, TweenInfo.new(0.28, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = targetSize, Position = targetPosition, BackgroundTransparency = targetTransparency}):Play()
+	end
 	local sizeXY = getgenv().UIToggled and (getgenv().T1 and 30 or 40) or (getgenv().T1 and 25 or 30)
 	TweenService:Create(imgHide, TweenInfo.new(DisableAnimation and 0 or .25), {
 		Size = UDim2.new(0, sizeXY, 0, sizeXY)
@@ -1197,7 +1209,7 @@ function Library:CreateWindow(Setting)
 	local LayoutOrder = -1
 	local PageCounter = 1
 
-	function Main_Function:AddTab(PageName)
+	function Main_Function:AddTab(PageName, Tag)
 
 		local Page_Name = tostring(PageName)
 		local Page_Title = Page_Name
@@ -1272,6 +1284,35 @@ function Library:CreateWindow(Setting)
 		TabTitle.TextSize = 14.000
 		TabTitle.TextXAlignment = Enum.TextXAlignment.Left
 		TabTitle.TextColor3 = getgenv().UIColor["GUI Text Color"]
+		TabTitle.Size = UDim2.new(1, -48, 1, 0)
+
+		local TabGradient = Instance.new("UIGradient")
+		TabGradient.Name = "TabGradient"
+		TabGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, getgenv().UIColor["Page Selected Color"]), ColorSequenceKeypoint.new(1, getgenv().UIColor["Background 1 Color"])})
+		TabGradient.Rotation = 0
+		TabGradient.Enabled = false
+		TabGradient.Parent = Frame
+		local TabTagLabel
+		if Tag ~= nil and Tag ~= false then
+			local tagText = typeof(Tag) == "table" and (Tag.Title or Tag.Text or Tag.Name or "TAG") or tostring(Tag)
+			local tagColor = typeof(Tag) == "table" and Tag.Color or getgenv().UIColor["Page Selected Color"]
+			TabTagLabel = Instance.new("TextLabel")
+			TabTagLabel.Name = "TabTag"
+			TabTagLabel.Parent = TabTitleContainer
+			TabTagLabel.AnchorPoint = Vector2.new(1, 0.5)
+			TabTagLabel.Position = UDim2.new(1, -2, 0.5, 0)
+			TabTagLabel.Size = UDim2.new(0, 42, 0, 17)
+			TabTagLabel.BackgroundColor3 = tagColor
+			TabTagLabel.BorderSizePixel = 0
+			TabTagLabel.Font = Enum.Font.GothamBold
+			TabTagLabel.Text = tostring(tagText)
+			TabTagLabel.TextSize = 10
+			TabTagLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+			TabTagLabel.TextTruncate = Enum.TextTruncate.AtEnd
+			local tagCorner = Instance.new("UICorner")
+			tagCorner.CornerRadius = UDim.new(0, 5)
+			tagCorner.Parent = TabTagLabel
+		end
 
 		PageButton.Name = "PageButton"
 		PageButton.Parent = PageName
@@ -1447,6 +1488,7 @@ function Library:CreateWindow(Setting)
 			if not (v:IsA('UIListLayout')) then
 				if i == 2 then 
 					v.Frame.Line.PageInLine.BackgroundTransparency = 0
+					if v.Frame:FindFirstChild("TabGradient") then v.Frame.TabGradient.Enabled = true end
 				end
 			end
 		end
@@ -1468,10 +1510,12 @@ function Library:CreateWindow(Setting)
 			for i, v in next, ControlList:GetChildren() do
 				if not (v:IsA('UIListLayout')) then
 					if v.Name == Page_Name .. "_Control" then 
+						if v.Frame:FindFirstChild("TabGradient") then v.Frame.TabGradient.Enabled = true end
 						TweenService:Create(v.Frame.Line.PageInLine, TweenInfo.new(getgenv().UIColor["Tween Animation 1 Speed"]), {
 							BackgroundTransparency = 0
 						}):Play()
 					else
+						if v.Frame:FindFirstChild("TabGradient") then v.Frame.TabGradient.Enabled = false end
 						TweenService:Create(v.Frame.Line.PageInLine, TweenInfo.new(getgenv().UIColor["Tween Animation 1 Speed"]), {
 							BackgroundTransparency = 1
 						}):Play()
@@ -1698,14 +1742,28 @@ function Library:CreateWindow(Setting)
 				checkbox.BackgroundColor3 = Color3.fromRGB(230, 230, 230)
 				checkbox.BackgroundTransparency = 1.000
 				checkbox.Position = UDim2.new(1, -5, 0.5, 3)
-				checkbox.Size = UDim2.new(0, 25, 0, 25)
-				checkbox.Image = "rbxassetid://4552505888"
-				checkbox.ImageColor3 = getgenv().UIColor["Toggle Border Color"]
+				checkbox.Size = UDim2.new(0, 38, 0, 22)
+				checkbox.Image = ""
+				checkbox.BackgroundTransparency = 0
+				checkbox.BackgroundColor3 = Default and getgenv().UIColor["Button Color"] or getgenv().UIColor["Background 2 Color"]
+				local TogglePillCorner = Instance.new("UICorner")
+				TogglePillCorner.CornerRadius = UDim.new(1, 0)
+				TogglePillCorner.Parent = checkbox
+				local TogglePillStroke = Instance.new("UIStroke")
+				TogglePillStroke.Color = getgenv().UIColor["Toggle Border Color"]
+				TogglePillStroke.Thickness = 1
+				TogglePillStroke.Transparency = 0.15
+				TogglePillStroke.Parent = checkbox
 				check.Name = "check"
 				check.Parent = checkbox
 				check.AnchorPoint = Vector2.new(0.5, 0.5)
-				check.BackgroundColor3 = getgenv().UIColor["Button Color"]
-				check.Position = UDim2.new(0.5, 0, 0.5, 0)
+				check.BackgroundColor3 = Color3.fromRGB(245, 249, 255)
+				check.Size = UDim2.new(0, 14, 0, 14)
+				check.Position = Default and UDim2.new(1, -11, 0.5, 0) or UDim2.new(0, 11, 0.5, 0)
+				check.AnchorPoint = Vector2.new(0.5, 0.5)
+				local ToggleKnobCorner = Instance.new("UICorner")
+				ToggleKnobCorner.CornerRadius = UDim.new(1, 0)
+				ToggleKnobCorner.Parent = check
 				local cac = 5
 				if Desc then
 					cac = 0
@@ -1767,14 +1825,10 @@ function Library:CreateWindow(Setting)
 				ToggleList.VerticalAlignment = Enum.VerticalAlignment.Center
 				ToggleList.Padding = UDim.new(0, 5)
 				local function ChangeStage(val)
-					local csize = val and UDim2.new(0.5, 0, 0.5, 0) or UDim2.new(0, 0, 0, 0)
-					local pos = val and UDim2.new(0.5, 0, 0.5, 0) or UDim2.new(0.5, 0, 0.5, 0)
-					local apos = val and Vector2.new(0.5, 0.5) or Vector2.new(0.5, 0.5)
-					game.TweenService:Create(check, TweenInfo.new(getgenv().UIColor["Tween Animation 1 Speed"]), {
-						Size = csize,
-						Position = pos,
-						AnchorPoint = apos
-					}):Play()
+					local knobPosition = val and UDim2.new(1, -11, 0.5, 0) or UDim2.new(0, 11, 0.5, 0)
+					local tweenInfo = TweenInfo.new(getgenv().UIColor["Tween Animation 1 Speed"], Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+					TweenService:Create(check, tweenInfo, {Position = knobPosition}):Play()
+					TweenService:Create(checkbox, TweenInfo.new(getgenv().UIColor["Tween Animation 1 Speed"]), {BackgroundColor3 = val and getgenv().UIColor["Button Color"] or getgenv().UIColor["Background 2 Color"]}):Play()
 				end
 				ChangeStage(Default)
 				local function ButtonClick()
