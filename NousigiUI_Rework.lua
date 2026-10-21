@@ -209,6 +209,82 @@ Library_Function.Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Library_Function.Gui.Name = 'Nousigi Hub GUI'
 Library_Function.Gui.Enabled = false
 
+local function AddButtonEffects(button)
+    if not button or not button:IsA("GuiButton") or button:GetAttribute("NousigiEffectsBound") then
+        return
+    end
+    button:SetAttribute("NousigiEffectsBound", true)
+    button.AutoButtonColor = false
+
+    local scale = button:FindFirstChild("NousigiPressScale")
+    if not scale then
+        scale = Instance.new("UIScale")
+        scale.Name = "NousigiPressScale"
+        scale.Scale = 1
+        scale.Parent = button
+    end
+
+    local hoverIn = TweenService:Create(scale, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Scale = 1.025})
+    local hoverOut = TweenService:Create(scale, TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Scale = 1})
+    local pressIn = TweenService:Create(scale, TweenInfo.new(0.07, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Scale = 0.965})
+    local pressOut = TweenService:Create(scale, TweenInfo.new(0.16, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Scale = 1})
+
+    button.MouseEnter:Connect(function()
+        hoverOut:Cancel()
+        hoverIn:Play()
+    end)
+    button.MouseLeave:Connect(function()
+        hoverIn:Cancel()
+        pressIn:Cancel()
+        hoverOut:Play()
+    end)
+    button.InputBegan:Connect(function(input)
+        if input.UserInputType ~= Enum.UserInputType.MouseButton1 and input.UserInputType ~= Enum.UserInputType.Touch then
+            return
+        end
+        hoverIn:Cancel()
+        pressOut:Cancel()
+        pressIn:Play()
+
+        local ripple = Instance.new("Frame")
+        ripple.Name = "NousigiRipple"
+        ripple.AnchorPoint = Vector2.new(0.5, 0.5)
+        local x = math.clamp(input.Position.X - button.AbsolutePosition.X, 0, button.AbsoluteSize.X)
+        local y = math.clamp(input.Position.Y - button.AbsolutePosition.Y, 0, button.AbsoluteSize.Y)
+        ripple.Position = UDim2.fromOffset(x, y)
+        ripple.Size = UDim2.fromOffset(0, 0)
+        ripple.BackgroundColor3 = (getgenv().UIColor and getgenv().UIColor["Click Effect Color"]) or Color3.fromRGB(220, 240, 255)
+        ripple.BackgroundTransparency = 0.58
+        ripple.BorderSizePixel = 0
+        ripple.ZIndex = button.ZIndex + 5
+        ripple.Parent = button
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(1, 0)
+        corner.Parent = ripple
+        local diameter = math.max(button.AbsoluteSize.X, button.AbsoluteSize.Y) * 1.65
+        local tween = TweenService:Create(ripple, TweenInfo.new(0.32, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Size = UDim2.fromOffset(diameter, diameter),
+            BackgroundTransparency = 1
+        })
+        tween:Play()
+        tween.Completed:Connect(function()
+            if ripple and ripple.Parent then ripple:Destroy() end
+        end)
+    end)
+    button.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            pressIn:Cancel()
+            pressOut:Play()
+        end
+    end)
+end
+
+Library_Function.Gui.DescendantAdded:Connect(function(object)
+    if object:IsA("GuiButton") then
+        task.defer(AddButtonEffects, object)
+    end
+end)
+
 getgenv().ReadyForGuiLoaded = false
 spawn(function()
 	repeat
@@ -228,10 +304,14 @@ Library_Function.HideGui = Instance.new('ScreenGui')
 Library_Function.HideGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Library_Function.HideGui.Name = 'Nousigi Hub Btn'
 
+Library_Function.HideGui.DescendantAdded:Connect(function(object)
+    if object:IsA("GuiButton") then task.defer(AddButtonEffects, object) end
+end)
 
 local btnHide = Instance.new('TextButton', Library_Function.HideGui) 
 btnHide.BackgroundTransparency = 1
 btnHide.Text = ""
+AddButtonEffects(btnHide)
 btnHide.AnchorPoint = Vector2.new(0, 1)
 btnHide.Size = UDim2.new(0, 50, 0, 50)
 btnHide.Position = UDim2.new(0, 15, 1, -15)
