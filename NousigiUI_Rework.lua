@@ -26,8 +26,10 @@ local function MakeTheme(accent, backgroundMain, background1, background2, backg
     return {
         ["Border Color"] = accent,
         ["Click Effect Color"] = secondary,
+        ["Open Button Outline Color"] = accent,
+        ["Open Button Background Color"] = background1,
         ["Setting Icon Color"] = secondary,
-        ["Logo Image"] = "rbxassetid://5009915795",
+        ["Logo Image"] = "rbxassetid://128147693647175",
         ["Search Icon Color"] = secondary,
         ["Search Icon Highlight Color"] = accent,
         ["GUI Text Color"] = text,
@@ -321,10 +323,11 @@ btnHideFrame.AnchorPoint = Vector2.new(0, 1)
 btnHideFrame.Size = UDim2.new(0, 50, 0, 50)
 btnHideFrame.Position = UDim2.new(0, 0, 1, 0)
 btnHideFrame.Name = "dut dit"
-btnHideFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+btnHideFrame.BackgroundColor3 = getgenv().UIColor["Open Button Background Color"] or getgenv().UIColor["Background 1 Color"]
 btnHideFrame.BackgroundTransparency = getgenv().UIToggled and 0 or .25
 
 local imgHide = Instance.new('ImageLabel', btnHide)
+imgHide.Name = "imgHide"
 imgHide.AnchorPoint = Vector2.new(0, 0)
 imgHide.Image = getgenv().UIColor["Logo Image"]
 imgHide.BackgroundTransparency = 1
@@ -335,6 +338,40 @@ imgHide.Position = UDim2.new(.5, 0, .5, 0)
 local UICornerBtnHide = Instance.new("UICorner")
 UICornerBtnHide.Parent = btnHideFrame
 UICornerBtnHide.CornerRadius = UDim.new(1, 0)
+local OpenButtonStroke = Instance.new("UIStroke")
+OpenButtonStroke.Name = "OpenButtonOutline"
+OpenButtonStroke.Thickness = 2
+OpenButtonStroke.Color = getgenv().UIColor["Open Button Outline Color"] or getgenv().UIColor["Border Color"]
+OpenButtonStroke.Transparency = 0
+OpenButtonStroke.Parent = btnHideFrame
+
+Library.OpenButton = {Button = btnHide, Frame = btnHideFrame, Icon = imgHide, Stroke = OpenButtonStroke}
+
+function Library:SetOpenButtonStyle(options)
+    options = options or {}
+    if options.Image then
+        getgenv().UIColor["Logo Image"] = options.Image
+        imgHide.Image = options.Image
+        for _, object in ipairs(Library_Function.Gui:GetDescendants()) do
+            if object:IsA("ImageLabel") and (object.Name == "Ruafimg" or object.Name == "HubLogo") then object.Image = options.Image end
+        end
+    end
+    if options.BackgroundColor then
+        getgenv().UIColor["Open Button Background Color"] = options.BackgroundColor
+        btnHideFrame.BackgroundColor3 = options.BackgroundColor
+    end
+    if options.OutlineColor then
+        getgenv().UIColor["Open Button Outline Color"] = options.OutlineColor
+        OpenButtonStroke.Color = options.OutlineColor
+    end
+    if options.OutlineThickness then OpenButtonStroke.Thickness = math.clamp(options.OutlineThickness, 0, 8) end
+    if options.Size then
+        local size = math.clamp(options.Size, 32, 80)
+        btnHide.Size = UDim2.fromOffset(size, size)
+        btnHideFrame.Size = UDim2.fromOffset(size, size)
+        imgHide.Size = UDim2.fromOffset(math.floor(size * 0.72), math.floor(size * 0.72))
+    end
+end
 
 Library.ToggleUI = function()
 	getgenv().UIToggled = not getgenv().UIToggled
@@ -832,6 +869,23 @@ function Library:CreateWindow(Setting)
 	Main.AnchorPoint = Vector2.new(0.5, 0.5)
 	Main.Size = UDim2.new(0, 650, 0, 380)
 
+    Library.MainFrame = Main
+    Library.MainContainer = nil
+    function Library:SetUISize(width, height)
+        width = math.clamp(tonumber(width) or 650, 420, 1100)
+        height = math.clamp(tonumber(height) or 380, 280, 800)
+        Main.Size = UDim2.fromOffset(width, height)
+    end
+    function Library:SetBackgroundImage(imageId, transparency)
+        local container = Main:FindFirstChild("MainContainer")
+        if not container then return false end
+        container.Image = imageId or ""
+        container.ImageTransparency = math.clamp(tonumber(transparency) or 0.25, 0, 1)
+        container.ScaleType = Enum.ScaleType.Crop
+        getgenv().UIColor["Background Image"] = imageId or ""
+        return true
+    end
+
 	makeDraggable(Main, Main)
 
 	maingui.Name = "maingui"
@@ -855,6 +909,9 @@ function Library:CreateWindow(Setting)
 	MainContainer.Name = "MainContainer"
 	MainContainer.Parent = Main
 	MainContainer.BackgroundColor3 = getgenv().UIColor["Background Main Color"]
+    MainContainer.Image = getgenv().UIColor["Background Image"] or ""
+    MainContainer.ImageTransparency = 0.25
+    MainContainer.ScaleType = Enum.ScaleType.Crop
 	MainContainer.Size = UDim2.new(1, 0, 1, 0)
 
 	local uistr = Instance.new("UIStroke", MainContainer);
@@ -933,6 +990,26 @@ function Library:CreateWindow(Setting)
 	local colorB = tostring(Library_Function.Getcolor(getgenv().UIColor['Title Text Color'])[3])
 	local color = colorR .. ',' .. colorG .. ',' .. colorB
     TextLabelMain.Text = "<font color=\"rgb(" .. tostring(color or "255,206,27") .. ")\">" .. tostring(TitleNameMain or "Nousigi Hub") .. "</font> " .. tostring(getgenv().MainDesc or "")
+
+    if Setting.Tag and tostring(Setting.Tag) ~= "" then
+        local HubTag = Instance.new("TextLabel")
+        HubTag.Name = "HubTopTag"
+        HubTag.Parent = TopMain
+        HubTag.AnchorPoint = Vector2.new(1, 0.5)
+        HubTag.Position = UDim2.new(1, -8, 0.5, 0)
+        HubTag.Size = UDim2.new(0, math.clamp(#tostring(Setting.Tag) * 7 + 18, 44, 110), 0, 18)
+        HubTag.BackgroundColor3 = Setting.TagColor or getgenv().UIColor["Page Selected Color"]
+        HubTag.BorderSizePixel = 0
+        HubTag.Font = Enum.Font.GothamBold
+        HubTag.Text = tostring(Setting.Tag)
+        HubTag.TextSize = 10
+        HubTag.TextColor3 = Color3.fromRGB(255, 255, 255)
+        HubTag.ZIndex = 5
+        local tagCorner = Instance.new("UICorner")
+        tagCorner.CornerRadius = UDim.new(0, 5)
+        tagCorner.Parent = HubTag
+        TextLabelMain.Size = UDim2.new(1, -125, 1, 0)
+    end
 
 	PageControl.Name = "Background1"
 	PageControl.Parent = Concacmain
